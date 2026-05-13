@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+<title>Monkey Birthday Runner 🎂🐵</title>
+
+<style>
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  background:#89e8ff;
+  touch-action:none;
+}
+
+.game{
+  position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* SKY */
+
+.sky{
+  position:absolute;
+  inset:0;
+  background:
+  linear-gradient(
+    to bottom,
+    #89e8ff 0%,
+    #c8f7ff 45%,
+    #fff1cf 100%
+  );
+}
+
+/* CLOUD */
+
+.cloud{
+  position:absolute;
+  width:120px;
+  height:50px;
+  background:white;
+  border-radius:50px;
+  opacity:.9;
+}
+
+.cloud::before,
+.cloud::after{
+  content:'';
+  position:absolute;
+  background:white;
+  border-radius:50%;
+}
+
+.cloud::before{
+  width:50px;
+  height:50px;
+  left:10px;
+  top:-18px;
+}
+
+.cloud::after{
+  width:60px;
+  height:60px;
+  right:10px;
+  top:-24px;
+}
+
+.c1{top:70px;left:8vw;}
+.c2{top:130px;left:60vw;}
+.c3{top:90px;left:35vw;}
+
+/* TREES */
+
+.tree-layer{
+  position:absolute;
+  bottom:120px;
+  width:320%;
+  height:220px;
+  display:flex;
+  gap:70px;
+  align-items:flex-end;
+  padding-left:30px;
+  z-index:3;
+  will-change:transform;
+}
+
+.tree{
+  position:relative;
+  width:90px;
+  height:180px;
+  flex-shrink:0;
+}
+
+.leaf{
+  position:absolute;
+  width:90px;
+  height:90px;
+  background:#46cf67;
+  border-radius:50%;
+  top:0;
+  left:0;
+  box-shadow:
+  -25px 20px 0 #5ae279,
+  25px 20px 0 #36b752;
+}
+
+.trunk{
+  position:absolute;
+  width:18px;
+  height:95px;
+  background:#8b5a2b;
+  left:36px;
+  bottom:0;
+  border-radius:10px;
+}
+
+/* UI */
+
+.message{
+  position:absolute;
+  top:20px;
+  width:100%;
+  text-align:center;
+  font-size:clamp(28px,6vw,50px);
+  font-weight:bold;
+  color:#ff4f94;
+  z-index:40;
+  letter-spacing:4px;
+  text-shadow:0 5px 12px rgba(0,0,0,.12);
+}
+
+.letter-box{
+  position:absolute;
+  top:90px;
+  left:50%;
+  transform:translateX(-50%);
+  min-width:280px;
+  background:rgba(255,255,255,.92);
+  border-radius:24px;
+  padding:14px 24px;
+  z-index:40;
+  text-align:center;
+  font-size:28px;
+  font-weight:bold;
+  color:#ff4f94;
+  letter-spacing:4px;
+  box-shadow:0 10px 28px rgba(0,0,0,.12);
+}
+
+.score{
+  position:absolute;
+  top:24px;
+  left:18px;
+  background:white;
+  padding:12px 18px;
+  border-radius:20px;
+  font-weight:bold;
+  z-index:50;
+  box-shadow:0 10px 24px rgba(0,0,0,.12);
+}
+
+.tap-guide{
+  position:absolute;
+  bottom:170px;
+  width:100%;
+  text-align:center;
+  color:#ff4f94;
+  font-size:24px;
+  font-weight:bold;
+  z-index:50;
+  animation:pulse 1.2s infinite;
+}
+
+@keyframes pulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.08)}
+}
+
+/* GROUND */
+
+.ground{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:120px;
+  background:
+  linear-gradient(to bottom,#66df67,#2db145);
+  border-top:8px solid #1e8e35;
+  z-index:5;
+}
+
+/* PLAYER */
+
+.player{
+  position:absolute;
+  width:92px;
+  height:92px;
+  left:70px;
+  bottom:120px;
+  z-index:20;
+}
+
+.player img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+/* BANANA */
+
+.banana{
+  position:absolute;
+  width:60px;
+  height:60px;
+  font-size:48px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:15;
+  animation:bananaSpin 1s infinite;
+}
+
+@keyframes bananaSpin{
+  0%{transform:rotate(0deg)}
+  50%{transform:rotate(10deg)}
+  100%{transform:rotate(0deg)}
+}
+
+/* ENEMY */
+
+.enemy{
+  position:absolute;
+  width:76px;
+  height:76px;
+  border-radius:24px;
+  z-index:14;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:44px;
+  border:5px solid rgba(255,255,255,.5);
+}
+
+.enemy1{background:#ff7676;}
+.enemy2{background:#7a7dff;}
+.enemy3{background:#ffb74f;}
+
+/* START */
+
+.start-screen,
+.game-over,
+.win-screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:300;
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(10px);
+}
+
+.game-over,
+.win-screen{
+  display:none;
+}
+
+.card{
+  position:relative;
+  width:min(92vw,560px);
+  background:white;
+  border-radius:40px;
+  padding:40px 28px;
+  text-align:center;
+  box-shadow:0 25px 60px rgba(0,0,0,.18);
+  z-index:20;
+}
+
+.card h1{
+  color:#ff4f94;
+  font-size:clamp(38px,8vw,62px);
+  margin-bottom:18px;
+}
+
+.card p{
+  font-size:24px;
+  color:#555;
+  line-height:1.5;
+}
+
+.card-icons{
+  font-size:78px;
+  margin-bottom:20px;
+}
+
+.main-btn{
+  margin-top:20px;
+  border:none;
+  background:#ff4f94;
+  color:white;
+  padding:16px 30px;
+  border-radius:26px;
+  font-size:22px;
+  font-weight:bold;
+  box-shadow:0 12px 28px rgba(255,79,148,.3);
+}
+
+/* MEMORY */
+
+.memory-photo{
+  position:absolute;
+  overflow:hidden;
+  border:3px solid white;
+  border-radius:28px;
+  box-shadow:0 14px 28px rgba(0,0,0,.18);
+  animation:memoryFloat 18s linear infinite;
+  opacity:0;
+}
+
+.memory-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* LEFT */
+
+.float1{
+  width:220px;
+  height:300px;
+  left:20px;
+  animation-delay:0s;
+}
+
+.float2{
+  width:220px;
+  height:300px;
+  left:45px;
+  animation-delay:5s;
+}
+
+.float3{
+  width:220px;
+  height:300px;
+  left:15px;
+  animation-delay:10s;
+}
+
+.float7{
+  width:220px;
+  height:300px;
+  left:40px;
+  animation-delay:15s;
+}
+
+.float8{
+  width:220px;
+  height:300px;
+  left:18px;
+  animation-delay:20s;
+}
+
+/* RIGHT */
+
+.float4{
+  width:220px;
+  height:300px;
+  right:20px;
+  animation-delay:2s;
+}
+
+.float5{
+  width:220px;
+  height:300px;
+  right:45px;
+  animation-delay:7s;
+}
+
+.float6{
+  width:220px;
+  height:300px;
+  right:15px;
+  animation-delay:12s;
+}
+
+.float9{
+  width:220px;
+  height:300px;
+  right:40px;
+  animation-delay:17s;
+}
+
+@keyframes memoryFloat{
+  0%{
+    transform:translateY(120vh) rotate(-4deg);
+    opacity:0;
+  }
+
+  15%{
+    opacity:1;
+  }
+
+  85%{
+    opacity:1;
+  }
+
+  100%{
+    transform:translateY(-140vh) rotate(4deg);
+    opacity:0;
+  }
+}
+
+/* CAKE */
+
+.final-cake{
+  position:absolute;
+  width:130px;
+  height:130px;
+  right:-240px;
+  bottom:120px;
+  display:none;
+  z-index:30;
+  font-size:110px;
+  animation:bounceCake 1s infinite;
+}
+
+@keyframes bounceCake{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+
+/* PHOTOBOOTH */
+
+.photobook-btn{
+  position:absolute;
+  top:20px;
+  right:20px;
+  border:none;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#ff4f94;
+  color:white;
+  font-size:28px;
+}
+
+#cameraWrap{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.94);
+  display:none;
+  z-index:99999;
+  justify-content:center;
+  align-items:center;
+}
+
+#camera{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+#countdown{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color:white;
+  font-size:120px;
+  font-weight:bold;
+  z-index:100;
+}
+
+#photobookFrame{
+  position:absolute;
+  left:20px;
+  top:50%;
+  transform:translateY(-50%);
+  width:min(320px,88vw);
+  height:92vh;
+  background:
+  linear-gradient(to bottom,#ff9bc2,#ff4f94);
+  border-radius:34px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  box-shadow:0 0 50px rgba(0,0,0,.4);
+}
+
+.frame-title{
+  text-align:center;
+  color:white;
+  font-size:26px;
+  font-weight:bold;
+}
+
+.frame-slot{
+  position:relative;
+  width:100%;
+  flex:1;
+  border-radius:28px;
+  overflow:hidden;
+  background:white;
+  border:8px solid #ffe2f0;
+}
+
+.frame-slot img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.sticker{
+  position:absolute;
+  z-index:5;
+  font-size:52px;
+}
+
+.s1{top:8px;left:8px;}
+.s2{top:8px;right:8px;}
+.s3{bottom:8px;left:8px;}
+.s4{bottom:8px;right:8px;}
+
+.controls{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.controls button{
+  border:none;
+  background:white;
+  color:#ff4f94;
+  font-weight:bold;
+  padding:12px 16px;
+  border-radius:18px;
+  font-size:18px;
+}
+
+@keyframes fireworks{
+  from{
+    transform:scale(0);
+    opacity:1;
+  }
+  to{
+    transform:scale(3);
+    opacity:0;
+  }
+}
+
+@media(max-width:900px){
+
+.memory-photo{
+  width:140px !important;
+  height:200px !important;
+}
+
+.card{
+  width:88vw;
+}
+
+#photobookFrame{
+  left:50%;
+  transform:translate(-50%,-50%);
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="game" id="game">
+
+<div class="sky"></div>
+
+<div class="cloud c1"></div>
+<div class="cloud c2"></div>
+<div class="cloud c3"></div>
+
+<div class="tree-layer" id="treeLayer"></div>
+
+<div class="message">
+MONKEY BIRTHDAY RUNNER 🐵
+</div>
+
+<div class="letter-box" id="letterBox"></div>
+
+<div class="score">
+🍌 <span id="score">0</span>
+</div>
+
+<div class="tap-guide">
+👆 Giữ lâu để bay cao hơn
+</div>
+
+<div class="player" id="player">
+<img src="photos/monkey.png">
+</div>
+
+<div class="final-cake" id="finalCake">
+🎂
+</div>
+
+<div class="ground"></div>
+
+<!-- START -->
+
+<div class="start-screen" id="startScreen">
+
+<div class="card">
+
+<div class="card-icons">
+🐵 🎂
+</div>
+
+<h1>Happy Run</h1>
+
+<p>
+Thu thập chuối để ghép HAPPY BIRTHDAY
+</p>
+
+<button class="main-btn" id="startBtn">
+BẮT ĐẦU
+</button>
+
+</div>
+
+</div>
+
+<!-- GAME OVER -->
+
+<div class="game-over" id="gameOver">
+
+<div class="card">
+
+<div class="card-icons">
+💀 👾
+</div>
+
+<h1>GAME OVER</h1>
+
+<p>
+Quái vật mạnh quá 😭
+</p>
+
+<button class="main-btn"
+onclick="location.reload()">
+🔄 Chơi lại
+</button>
+
+</div>
+
+</div>
+
+<!-- WIN -->
+
+<div class="win-screen" id="winScreen">
+
+<div class="memory-photo float1"><img src="photos/pic1.jpg"></div>
+<div class="memory-photo float2"><img src="photos/pic2.jpg"></div>
+<div class="memory-photo float3"><img src="photos/pic3.jpg"></div>
+<div class="memory-photo float4"><img src="photos/pic4.jpg"></div>
+<div class="memory-photo float5"><img src="photos/pic5.jpg"></div>
+<div class="memory-photo float7"><img src="photos/pic7.jpg"></div>
+<div class="memory-photo float9"><img src="photos/pic9.jpg"></div>
+
+<div class="card">
+
+<button class="photobook-btn"
+id="openPhotobook">
+📸
+</button>
+
+<div class="card-icons">
+🎂
+</div>
+
+<h1>
+Chúc Cậu Ba Sinh Nhật Vui Vẻ 🎉
+</h1>
+
+<p>
+Tuổi mới thật nhiều sức khỏe,
+luôn hạnh phúc bên gia đình 💖
+</p>
+
+<button class="main-btn"
+onclick="location.reload()">
+🔄 Chơi lại
+</button>
+
+</div>
+
+</div>
+
+<!-- PHOTOBOOK -->
+
+<div id="cameraWrap">
+
+<video id="camera"
+autoplay
+playsinline></video>
+
+<div id="countdown"></div>
+
+<div id="photobookFrame">
+
+<div class="frame-title">
+🎂 PHOTOBOOK 🎀
+</div>
+
+<div class="frame-slot" id="slot1"></div>
+<div class="frame-slot" id="slot2"></div>
+<div class="frame-slot" id="slot3"></div>
+
+<div class="controls">
+
+<button id="shootBtn">
+📸 Chụp
+</button>
+
+<button id="downloadBtn">
+⬇️ Tải
+</button>
+
+<button id="closeBtn">
+❌ Đóng
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const game=document.getElementById('game');
+const player=document.getElementById('player');
+const scoreEl=document.getElementById('score');
+const letterBox=document.getElementById('letterBox');
+const treeLayer=document.getElementById('treeLayer');
+const startBtn=document.getElementById('startBtn');
+const startScreen=document.getElementById('startScreen');
+const finalCake=document.getElementById('finalCake');
+const gameOver=document.getElementById('gameOver');
+const winScreen=document.getElementById('winScreen');
+
+const letters='HAPPY BIRTHDAY'.split('');
+
+let started=false;
+let alive=true;
+let movingToCake=false;
+
+let score=0;
+let letterIndex=0;
+
+let playerBottom=120;
+let velocity=0;
+let gravity=0.9;
+let holding=false;
+
+let treePos=0;
+
+for(let i=0;i<28;i++){
+
+const tree=document.createElement('div');
+
+tree.className='tree';
+
+tree.innerHTML=`
+<div class="leaf"></div>
+<div class="trunk"></div>
+`;
+
+treeLayer.appendChild(tree);
+}
+
+startBtn.onclick=()=>{
+
+started=true;
+
+startScreen.style.display='none';
+
+requestAnimationFrame(gameLoop);
+
+bananaInterval=setInterval(createBanana,1500);
+
+enemyInterval=setInterval(createEnemy,1700);
+
+};
+
+function gameLoop(){
+
+if(started && alive){
+
+treePos-=3;
+
+if(treePos<=-window.innerWidth){
+treePos=0;
+}
+
+treeLayer.style.transform=
+`translateX(${treePos}px)`;
+
+gravity=holding && velocity>0 ? 0.45 : 0.9;
+
+velocity-=gravity;
+
+playerBottom+=velocity;
+
+if(playerBottom<120){
+playerBottom=120;
+velocity=0;
+}
+
+player.style.bottom=playerBottom+'px';
+
+}
+
+requestAnimationFrame(gameLoop);
+}
+
+function holdStart(){
+
+if(!started || !alive)return;
+
+holding=true;
+
+if(playerBottom<=121){
+velocity=20;
+}
+}
+
+function holdEnd(){
+holding=false;
+}
+
+window.addEventListener('touchstart',holdStart);
+window.addEventListener('touchend',holdEnd);
+
+window.addEventListener('mousedown',holdStart);
+window.addEventListener('mouseup',holdEnd);
+
+/* BANANA */
+
+function createBanana(){
+
+if(!alive || movingToCake)return;
+
+const banana=document.createElement('div');
+
+banana.className='banana';
+
+banana.innerHTML='🍌';
+
+banana.style.bottom=
+(220+Math.random()*180)+'px';
+
+game.appendChild(banana);
+
+let x=window.innerWidth+80;
+
+function move(){
+
+if(!alive)return;
+
+x-=9;
+
+banana.style.left=x+'px';
+
+const p=player.getBoundingClientRect();
+const b=banana.getBoundingClientRect();
+
+const hit=
+p.left<b.right &&
+p.right>b.left &&
+p.top<b.bottom &&
+p.bottom>b.top;
+
+if(hit){
+
+score+=10;
+
+scoreEl.innerHTML=score;
+
+if(letterIndex<letters.length){
+
+letterBox.innerHTML+=letters[letterIndex];
+
+letterIndex++;
+}
+
+banana.remove();
+
+if(letterIndex>=letters.length){
+finishRun();
+}
+
+return;
+}
+
+if(x<-100){
+banana.remove();
+return;
+}
+
+requestAnimationFrame(move);
+}
+
+requestAnimationFrame(move);
+}
+
+/* ENEMY */
+
+const enemyTypes=[
+{emoji:'👾',class:'enemy1'},
+{emoji:'👹',class:'enemy2'},
+{emoji:'💀',class:'enemy3'}
+];
+
+function createEnemy(){
+
+if(!alive || movingToCake)return;
+
+const type=
+enemyTypes[
+Math.floor(Math.random()*enemyTypes.length)
+];
+
+const enemy=document.createElement('div');
+
+enemy.className=`enemy ${type.class}`;
+
+enemy.innerHTML=type.emoji;
+
+game.appendChild(enemy);
+
+let x=window.innerWidth+100;
+
+let bottom=120;
+let jumpVelocity=0;
+
+const speed=10+Math.random()*3;
+
+function move(){
+
+if(!alive)return;
+
+x-=speed;
+
+enemy.style.left=x+'px';
+
+if(Math.random()<0.035 && bottom<=121){
+jumpVelocity=18+Math.random()*5;
+}
+
+jumpVelocity-=1;
+
+bottom+=jumpVelocity;
+
+if(bottom<120){
+bottom=120;
+jumpVelocity=0;
+}
+
+enemy.style.bottom=bottom+'px';
+
+const p=player.getBoundingClientRect();
+const e=enemy.getBoundingClientRect();
+
+const hit=
+p.left<e.right &&
+p.right>e.left &&
+p.top<e.bottom &&
+p.bottom>e.top;
+
+if(hit){
+
+alive=false;
+
+gameOver.style.display='flex';
+
+return;
+}
+
+if(x<-120){
+
+enemy.remove();
+
+return;
+}
+
+requestAnimationFrame(move);
+}
+
+requestAnimationFrame(move);
+}
+
+/* FINISH */
+
+function finishRun(){
+
+movingToCake=true;
+
+finalCake.style.display='block';
+
+let cakeX=window.innerWidth+100;
+
+const moveCake=setInterval(()=>{
+
+cakeX-=8;
+
+finalCake.style.left=cakeX+'px';
+
+if(cakeX<window.innerWidth-320){
+
+clearInterval(moveCake);
+
+autoRunToCake(cakeX);
+}
+
+},16);
+}
+
+function autoRunToCake(cakeX){
+
+const run=setInterval(()=>{
+
+const playerX=
+parseInt(player.style.left||70);
+
+player.style.left=(playerX+5)+'px';
+
+if(playerX>=cakeX-120){
+
+clearInterval(run);
+
+alive=false;
+
+showWin();
+}
+
+},16);
+}
+
+function showWin(){
+
+winScreen.style.display='flex';
+
+launchFireworks();
+}
+
+/* FIREWORKS */
+
+function launchFireworks(){
+
+setInterval(()=>{
+
+for(let i=0;i<8;i++){
+
+const spark=document.createElement('div');
+
+spark.style.position='absolute';
+spark.style.width='10px';
+spark.style.height='10px';
+spark.style.borderRadius='50%';
+
+spark.style.left=
+Math.random()*window.innerWidth+'px';
+
+spark.style.top=
+Math.random()*window.innerHeight*.5+'px';
+
+spark.style.background=
+`hsl(${Math.random()*360},100%,60%)`;
+
+spark.style.zIndex='999';
+
+spark.style.animation=
+'fireworks 1.3s forwards';
+
+document.body.appendChild(spark);
+
+setTimeout(()=>{
+spark.remove();
+},1300);
+
+}
+
+},1300);
+}
+
+/* PHOTOBOOTH */
+
+const cameraWrap=document.getElementById('cameraWrap');
+const openPhotobook=document.getElementById('openPhotobook');
+const closeBtn=document.getElementById('closeBtn');
+const shootBtn=document.getElementById('shootBtn');
+const downloadBtn=document.getElementById('downloadBtn');
+
+const video=document.getElementById('camera');
+const countdown=document.getElementById('countdown');
+
+let stream;
+let captured=[];
+
+const decorations=[
+['🌸','🎀','💖','⭐'],
+['🍓','🎂','✨','🎈'],
+['🎉','🌟','🎊','🐵']
+];
+
+openPhotobook.onclick=async()=>{
+
+cameraWrap.style.display='flex';
+
+stream=
+await navigator.mediaDevices.getUserMedia({
+video:{
+facingMode:'user'
+},
+audio:false
+});
+
+video.srcObject=stream;
+};
+
+closeBtn.onclick=()=>{
+
+cameraWrap.style.display='none';
+
+if(stream){
+stream.getTracks().forEach(t=>t.stop());
+}
+};
+
+shootBtn.onclick=async()=>{
+
+captured=[];
+
+document.getElementById('slot1').innerHTML='';
+document.getElementById('slot2').innerHTML='';
+document.getElementById('slot3').innerHTML='';
+
+for(let i=1;i<=3;i++){
+
+await countDown();
+
+await capture(i);
+
+await new Promise(r=>setTimeout(r,700));
+}
+};
+
+function countDown(){
+
+return new Promise(resolve=>{
+
+let n=3;
+
+countdown.innerHTML=n;
+
+const timer=setInterval(()=>{
+
+n--;
+
+if(n>0){
+countdown.innerHTML=n;
+}else if(n===0){
+countdown.innerHTML='📸';
+}
+
+if(n<0){
+
+clearInterval(timer);
+
+countdown.innerHTML='';
+
+resolve();
+}
+
+},800);
+
+});
+}
+
+function renderFrameDecor(slotEl,slot){
+
+const deco=decorations[slot-1];
+
+slotEl.innerHTML=`
+<div class="sticker s1">${deco[0]}</div>
+<div class="sticker s2">${deco[1]}</div>
+<div class="sticker s3">${deco[2]}</div>
+<div class="sticker s4">${deco[3]}</div>
+`;
+}
+
+function capture(slot){
+
+return new Promise(resolve=>{
+
+const canvas=document.createElement('canvas');
+
+canvas.width=500;
+canvas.height=750;
+
+const ctx=canvas.getContext('2d');
+
+ctx.drawImage(video,0,0,500,750);
+
+ctx.fillStyle='rgba(255,255,255,.12)';
+ctx.fillRect(0,0,500,750);
+
+ctx.strokeStyle='white';
+ctx.lineWidth=18;
+ctx.strokeRect(14,14,472,722);
+
+ctx.fillStyle='#ff4f94';
+ctx.fillRect(70,24,360,52);
+
+ctx.fillStyle='white';
+ctx.font='bold 30px Arial';
+ctx.fillText('HAPPY BIRTHDAY',95,58);
+
+const deco=decorations[slot-1];
+
+ctx.font='52px Arial';
+
+ctx.fillText(deco[0],24,68);
+ctx.fillText(deco[1],420,68);
+ctx.fillText(deco[2],24,710);
+ctx.fillText(deco[3],420,710);
+
+const img=document.createElement('img');
+
+img.onload=()=>{
+
+captured.push({
+src:img.src,
+deco
+});
+
+const slotEl=
+document.getElementById('slot'+slot);
+
+renderFrameDecor(slotEl,slot);
+
+slotEl.appendChild(img);
+
+resolve();
+};
+
+img.src=canvas.toDataURL('image/png');
+
+});
+
+}
+
+downloadBtn.onclick=()=>{
+
+if(captured.length===0)return;
+
+const canvas=document.createElement('canvas');
+
+canvas.width=1080;
+canvas.height=2400;
+
+const ctx=canvas.getContext('2d');
+
+const gradient=
+ctx.createLinearGradient(0,0,0,2400);
+
+gradient.addColorStop(0,'#ff9bc2');
+gradient.addColorStop(1,'#ff4f94');
+
+ctx.fillStyle=gradient;
+ctx.fillRect(0,0,1080,2400);
+
+ctx.fillStyle='white';
+ctx.font='bold 70px Arial';
+
+ctx.fillText(
+'HAPPY BIRTHDAY 🎂',
+180,
+100
+);
+
+let loaded=0;
+
+captured.forEach((item,index)=>{
+
+const img=new Image();
+
+img.src=item.src;
+
+img.onload=()=>{
+
+const y=180+(index*700);
+
+ctx.fillStyle='white';
+
+roundRect(
+ctx,
+80,
+y,
+920,
+580,
+40,
+true
+);
+
+ctx.drawImage(img,110,y+30,860,520);
+
+ctx.font='60px Arial';
+
+ctx.fillText(item.deco[0],100,y+70);
+ctx.fillText(item.deco[1],900,y+70);
+ctx.fillText(item.deco[2],100,y+540);
+ctx.fillText(item.deco[3],900,y+540);
+
+loaded++;
+
+if(loaded===captured.length){
+
+const link=
+document.createElement('a');
+
+link.download=
+'birthday-photobook.png';
+
+link.href=canvas.toDataURL('image/png');
+
+link.click();
+}
+}
+});
+};
+
+function roundRect(ctx,x,y,w,h,r,fill){
+
+ctx.beginPath();
+
+ctx.moveTo(x+r,y);
+
+ctx.lineTo(x+w-r,y);
+
+ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+
+ctx.lineTo(x+w,y+h-r);
+
+ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+
+ctx.lineTo(x+r,y+h);
+
+ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+
+ctx.lineTo(x,y+r);
+
+ctx.quadraticCurveTo(x,y,x+r,y);
+
+ctx.closePath();
+
+if(fill)ctx.fill();
+}
+
+</script>
+
+</body>
+</html>
