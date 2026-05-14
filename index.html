@@ -341,8 +341,7 @@ body{
   border-radius:22px;
   animation:memoryFloat 18s linear infinite;
   opacity:0;
-  z-index:999; /* CHỈNH: ảnh nổi lên trên bảng trắng */
-  pointer-events:none;
+  z-index:600;
 }
 
 .memory-photo img{
@@ -524,7 +523,7 @@ body{
     opacity:1;
   }
   to{
-    transform:scale(4);
+    transform:scale(5);
     opacity:0;
   }
 }
@@ -563,12 +562,17 @@ body{
 
 <body>
 
+<!-- HAPPY BIRTHDAY MUSIC -->
+<audio id="birthdayMusic" loop>
+<source src="music/happy-birthday.mp3" type="audio/mpeg">
+</audio>
+
 <div class="rotate-screen" id="rotateScreen">
 <div class="card">
 <div class="card-icons">📱 ↔️</div>
 <h1>Xoay ngang điện thoại</h1>
 <p>
-Dán link vô google mới xoay được nha 🎮
+Dán link vào google mới chơi được nha 🎮
 </p>
 </div>
 </div>
@@ -738,6 +742,8 @@ onclick="location.reload()">
 </div>
 
 <script>
+
+const birthdayMusic=document.getElementById('birthdayMusic');
 
 const rotateScreen=document.getElementById('rotateScreen');
 
@@ -1094,6 +1100,18 @@ winScreen.style.display='flex';
 
 launchFireworks();
 
+playBirthdayMusic();
+
+}
+
+/* MUSIC */
+
+function playBirthdayMusic(){
+
+birthdayMusic.volume=0.8;
+
+birthdayMusic.play().catch(()=>{});
+
 }
 
 /* FIREWORK */
@@ -1102,38 +1120,38 @@ function launchFireworks(){
 
 setInterval(()=>{
 
-for(let i=0;i<8;i++){
+for(let i=0;i<22;i++){
 
 const spark=document.createElement('div');
 
 spark.style.position='absolute';
-spark.style.width='10px';
-spark.style.height='10px';
+spark.style.width='12px';
+spark.style.height='12px';
 spark.style.borderRadius='50%';
 
 spark.style.left=
 Math.random()*window.innerWidth+'px';
 
 spark.style.top=
-Math.random()*window.innerHeight*.5+'px';
+Math.random()*window.innerHeight*.6+'px';
 
 spark.style.background=
 `hsl(${Math.random()*360},100%,60%)`;
 
-spark.style.zIndex='999';
+spark.style.zIndex='99999';
 
 spark.style.animation=
-'fireworks 1.3s forwards';
+'fireworks 1.5s forwards';
 
 document.body.appendChild(spark);
 
 setTimeout(()=>{
 spark.remove();
-},1300);
+},1500);
 
 }
 
-},1100);
+},650);
 
 }
 
