@@ -2,8 +2,10 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"/>
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"
+/>
 
 <title>Monkey Birthday Runner 🎂🐵</title>
 
@@ -22,7 +24,7 @@ img,
 button,
 div,
 span{
-  -webkit-user-drag:none;
+  -webkit-touch-callout:none;
 }
 
 html,body{
@@ -44,8 +46,6 @@ body{
   width:100vw;
   height:100vh;
   overflow:hidden;
-  transform:scale(.94);
-  transform-origin:center center;
 }
 
 /* SKY */
@@ -53,7 +53,8 @@ body{
 .sky{
   position:absolute;
   inset:0;
-  background:linear-gradient(
+  background:
+  linear-gradient(
     to bottom,
     #89e8ff 0%,
     #c8f7ff 45%,
@@ -65,8 +66,8 @@ body{
 
 .cloud{
   position:absolute;
-  width:110px;
-  height:46px;
+  width:90px;
+  height:40px;
   background:white;
   border-radius:50px;
   opacity:.9;
@@ -81,78 +82,79 @@ body{
 }
 
 .cloud::before{
-  width:46px;
-  height:46px;
+  width:38px;
+  height:38px;
   left:10px;
-  top:-16px;
+  top:-12px;
 }
 
 .cloud::after{
-  width:56px;
-  height:56px;
+  width:48px;
+  height:48px;
   right:10px;
-  top:-22px;
+  top:-18px;
 }
 
 .c1{top:60px;left:8vw;}
-.c2{top:120px;left:60vw;}
+.c2{top:100px;left:60vw;}
 .c3{top:80px;left:35vw;}
 
-/* TREES */
+/* TREE */
 
 .tree-layer{
   position:absolute;
-  bottom:92px;
+  bottom:88px;
   width:320%;
-  height:170px;
+  height:150px;
   display:flex;
-  gap:70px;
+  gap:55px;
   align-items:flex-end;
-  padding-left:30px;
+  padding-left:20px;
   z-index:3;
+  will-change:transform;
 }
 
 .tree{
   position:relative;
-  width:80px;
-  height:150px;
+  width:72px;
+  height:130px;
   flex-shrink:0;
 }
 
 .leaf{
   position:absolute;
-  width:80px;
-  height:80px;
+  width:72px;
+  height:72px;
   background:#46cf67;
   border-radius:50%;
   top:0;
   left:0;
   box-shadow:
-  -22px 18px 0 #5ae279,
-  22px 18px 0 #36b752;
+  -18px 18px 0 #5ae279,
+  18px 18px 0 #36b752;
 }
 
 .trunk{
   position:absolute;
   width:16px;
-  height:82px;
+  height:75px;
   background:#8b5a2b;
-  left:32px;
+  left:28px;
   bottom:0;
   border-radius:10px;
 }
 
-/* UI */
+/* TOP UI */
 
 .message{
   position:absolute;
-  top:12px;
+  top:18px;
   width:100%;
   text-align:center;
-  font-size:clamp(18px,4vw,40px);
+  font-size:clamp(18px,4vw,36px);
   font-weight:bold;
   color:#ff4f94;
-  z-index:40;
+  z-index:50;
   letter-spacing:2px;
 }
 
@@ -161,38 +163,38 @@ body{
   top:54px;
   left:50%;
   transform:translateX(-50%);
-  min-width:200px;
+  min-width:180px;
   background:rgba(255,255,255,.95);
-  border-radius:20px;
+  border-radius:18px;
   padding:8px 16px;
-  z-index:40;
+  z-index:50;
   text-align:center;
   font-size:18px;
   font-weight:bold;
   color:#ff4f94;
   letter-spacing:2px;
-  box-shadow:0 8px 22px rgba(0,0,0,.12);
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
 }
 
 .score{
   position:absolute;
-  top:12px;
-  left:12px;
+  top:14px;
+  left:14px;
   background:white;
-  padding:8px 12px;
+  padding:8px 14px;
   border-radius:16px;
   font-weight:bold;
-  z-index:50;
+  z-index:60;
   font-size:15px;
 }
 
 .tap-guide{
   position:absolute;
-  bottom:108px;
+  bottom:110px;
   width:100%;
   text-align:center;
   color:#ff4f94;
-  font-size:16px;
+  font-size:14px;
   font-weight:bold;
   z-index:50;
 }
@@ -203,10 +205,10 @@ body{
   position:absolute;
   bottom:0;
   width:100%;
-  height:88px;
+  height:76px;
   background:
   linear-gradient(to bottom,#66df67,#2db145);
-  border-top:6px solid #1e8e35;
+  border-top:5px solid #1e8e35;
   z-index:5;
 }
 
@@ -214,10 +216,10 @@ body{
 
 .player{
   position:absolute;
-  width:72px;
-  height:72px;
-  left:52px;
-  bottom:88px;
+  width:68px;
+  height:68px;
+  left:40px;
+  bottom:76px;
   z-index:20;
 }
 
@@ -232,42 +234,40 @@ body{
 
 .banana{
   position:absolute;
-  width:56px;
-  height:56px;
+  width:50px;
+  height:50px;
   font-size:42px;
   display:flex;
   justify-content:center;
   align-items:center;
   z-index:15;
-  pointer-events:none;
 }
 
 /* ENEMY */
 
 .enemy{
   position:absolute;
-  width:74px;
-  height:74px;
+  width:70px;
+  height:70px;
   border-radius:22px;
   z-index:14;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:42px;
+  font-size:40px;
   border:4px solid rgba(255,255,255,.4);
-  pointer-events:none;
 }
 
 .enemy1{background:#ff7676;}
 .enemy2{background:#7a7dff;}
 .enemy3{background:#ffb74f;}
 
-/* MODALS */
+/* SCREEN */
 
 .start-screen,
 .game-over,
 .win-screen,
-.rotate-overlay{
+.rotate-screen{
   position:absolute;
   inset:0;
   display:flex;
@@ -275,8 +275,8 @@ body{
   align-items:center;
   flex-direction:column;
   z-index:500;
-  background:rgba(255,255,255,.22);
-  backdrop-filter:blur(8px);
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(7px);
 }
 
 .game-over,
@@ -284,7 +284,7 @@ body{
   display:none;
 }
 
-.rotate-overlay{
+.rotate-screen{
   z-index:999999;
 }
 
@@ -292,19 +292,20 @@ body{
 
 .card{
   position:relative;
-  width:min(68vw,380px);
+  width:min(62vw,420px);
   background:white;
-  border-radius:26px;
-  padding:22px 16px;
+  border-radius:28px;
+  padding:22px 18px;
   text-align:center;
-  box-shadow:0 18px 40px rgba(0,0,0,.18);
+  box-shadow:0 18px 40px rgba(0,0,0,.16);
   z-index:20;
+  margin-top:-18px;
 }
 
 .card h1{
   color:#ff4f94;
   font-size:clamp(22px,4vw,38px);
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 
 .card p{
@@ -314,8 +315,8 @@ body{
 }
 
 .card-icons{
-  font-size:54px;
-  margin-bottom:12px;
+  font-size:52px;
+  margin-bottom:10px;
 }
 
 .main-btn{
@@ -323,40 +324,21 @@ body{
   border:none;
   background:#ff4f94;
   color:white;
-  padding:12px 22px;
-  border-radius:18px;
-  font-size:17px;
+  padding:13px 22px;
+  border-radius:20px;
+  font-size:16px;
   font-weight:bold;
   cursor:pointer;
   position:relative;
-  z-index:99999;
+  z-index:9999;
 }
 
-.photobook-btn{
-  border:none;
-  background:#ff4f94;
-  color:white;
-  width:58px;
-  height:58px;
-  border-radius:50%;
-  font-size:28px;
-  margin-top:10px;
-  cursor:pointer;
-}
-
-.photobook-hint{
-  margin-top:8px;
-  font-size:12px;
-  color:#ff4f94;
-  font-weight:bold;
-}
-
-/* MEMORY */
+/* WIN */
 
 .memory-photo{
   position:absolute;
   overflow:hidden;
-  border-radius:26px;
+  border-radius:22px;
   animation:memoryFloat 18s linear infinite;
   opacity:0;
   z-index:10;
@@ -368,30 +350,27 @@ body{
   object-fit:contain;
 }
 
-.float1{width:250px;height:190px;left:0px;animation-delay:0s;}
-.float2{width:250px;height:190px;left:15px;animation-delay:4s;}
-.float3{width:250px;height:190px;right:0px;animation-delay:2s;}
-.float4{width:250px;height:190px;right:15px;animation-delay:6s;}
-.float5{width:250px;height:190px;left:5px;animation-delay:8s;}
-.float6{width:250px;height:190px;right:5px;animation-delay:10s;}
-.float7{width:250px;height:190px;left:10px;animation-delay:12s;}
-.float8{width:250px;height:190px;right:10px;animation-delay:14s;}
-.float9{width:250px;height:190px;left:20px;animation-delay:16s;}
+.float1{width:250px;height:190px;left:10px;animation-delay:0s;}
+.float2{width:250px;height:190px;left:25px;animation-delay:3s;}
+.float3{width:250px;height:190px;right:10px;animation-delay:2s;}
+.float4{width:250px;height:190px;right:25px;animation-delay:5s;}
+.float5{width:240px;height:180px;left:0px;animation-delay:7s;}
+.float6{width:240px;height:180px;right:0px;animation-delay:9s;}
+.float7{width:250px;height:190px;left:18px;animation-delay:11s;}
+.float8{width:250px;height:190px;right:18px;animation-delay:13s;}
+.float9{width:250px;height:190px;left:30px;animation-delay:15s;}
 
 @keyframes memoryFloat{
   0%{
     transform:translateY(120vh);
     opacity:0;
   }
-
   15%{
     opacity:1;
   }
-
   85%{
     opacity:1;
   }
-
   100%{
     transform:translateY(-140vh);
     opacity:0;
@@ -402,16 +381,40 @@ body{
 
 .final-cake{
   position:absolute;
-  width:110px;
-  height:110px;
-  right:-240px;
-  bottom:88px;
+  width:100px;
+  height:100px;
+  right:-200px;
+  bottom:76px;
   display:none;
   z-index:30;
-  font-size:92px;
+  font-size:90px;
 }
 
 /* PHOTO */
+
+.photobook-btn{
+  position:absolute;
+  top:14px;
+  right:14px;
+  border:none;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:#ff4f94;
+  color:white;
+  font-size:24px;
+  cursor:pointer;
+  z-index:99999;
+}
+
+.photo-hint{
+  position:absolute;
+  top:72px;
+  right:10px;
+  color:#ff4f94;
+  font-size:11px;
+  font-weight:bold;
+}
 
 #cameraWrap{
   position:fixed;
@@ -421,7 +424,6 @@ body{
   z-index:999999;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
 }
 
 #camera{
@@ -441,27 +443,44 @@ body{
   font-size:90px;
   font-weight:bold;
   z-index:100;
+  text-shadow:0 0 20px black;
 }
 
-#photoResult{
-  position:relative;
-  width:min(92vw,380px);
+#photobookFrame{
+  position:absolute;
+  left:18px;
+  top:50%;
+  transform:translateY(-50%);
+  width:min(320px,86vw);
+  height:88vh;
+  background:
+  linear-gradient(to bottom,#ff9bc2,#ff4f94);
+  border-radius:30px;
+  padding:16px;
   display:none;
   flex-direction:column;
   gap:14px;
-  z-index:999999;
+  box-shadow:0 0 50px rgba(0,0,0,.4);
+  overflow:hidden;
 }
 
-.result-photo{
+.frame-title{
+  text-align:center;
+  color:white;
+  font-size:24px;
+  font-weight:bold;
+}
+
+.frame-slot{
   position:relative;
   width:100%;
-  height:180px;
+  flex:1;
   border-radius:24px;
   overflow:hidden;
   background:white;
 }
 
-.result-photo img{
+.frame-slot img{
   width:100%;
   height:100%;
   object-fit:cover;
@@ -469,17 +488,18 @@ body{
 
 .sticker{
   position:absolute;
+  z-index:5;
   font-size:42px;
-  z-index:10;
 }
 
-.s1{top:6px;left:8px;}
-.s2{top:6px;right:8px;}
-.s3{bottom:6px;left:8px;}
-.s4{bottom:6px;right:8px;}
+.s1{top:8px;left:8px;}
+.s2{top:8px;right:8px;}
+.s3{bottom:8px;left:8px;}
+.s4{bottom:8px;right:8px;}
 
 .controls{
   display:flex;
+  flex-wrap:wrap;
   justify-content:center;
   gap:10px;
 }
@@ -490,8 +510,8 @@ body{
   color:#ff4f94;
   font-weight:bold;
   padding:12px 16px;
-  border-radius:16px;
-  font-size:15px;
+  border-radius:18px;
+  font-size:16px;
   cursor:pointer;
 }
 
@@ -510,26 +530,29 @@ body{
 
 @media(max-width:900px){
 
-.game{
-  transform:scale(.9);
+.card{
+  width:74vw;
+  padding:18px 14px;
+  margin-top:-12px;
 }
 
-.card{
-  width:72vw;
-  padding:18px 14px;
+.card h1{
+  font-size:24px;
+}
+
+.card p{
+  font-size:13px;
 }
 
 .memory-photo{
-  width:180px !important;
+  width:170px !important;
   height:130px !important;
 }
 
-.message{
-  font-size:18px;
-}
-
-.tap-guide{
-  font-size:13px;
+#photobookFrame{
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90vw;
 }
 
 }
@@ -539,14 +562,14 @@ body{
 
 <body>
 
-<div class="rotate-overlay" id="rotateOverlay">
-  <div class="card">
-    <div class="card-icons">📱↔️</div>
-    <h1>Xoay ngang điện thoại</h1>
-    <p>
-      Xoay ngang để nhìn toàn bộ trò chơi dễ hơn 🎮
-    </p>
-  </div>
+<div class="rotate-screen" id="rotateScreen">
+<div class="card">
+<div class="card-icons">📱 ↔️</div>
+<h1>Xoay ngang điện thoại</h1>
+<p>
+Xoay ngang màn hình để chơi game dễ hơn nha 🎮
+</p>
+</div>
 </div>
 
 <div class="game" id="game">
@@ -570,11 +593,11 @@ MONKEY BIRTHDAY RUNNER 🐵
 </div>
 
 <div class="tap-guide">
-👆 Giữ để bay cao hơn
+👆 Giữ để nhảy cao hơn
 </div>
 
 <div class="player" id="player">
-<img src="photos/monkey.png">
+<img draggable="false" src="photos/monkey.png">
 </div>
 
 <div class="final-cake" id="finalCake">
@@ -586,6 +609,7 @@ MONKEY BIRTHDAY RUNNER 🐵
 <!-- START -->
 
 <div class="start-screen" id="startScreen">
+
 <div class="card">
 
 <div class="card-icons">
@@ -603,11 +627,13 @@ BẮT ĐẦU
 </button>
 
 </div>
+
 </div>
 
 <!-- GAME OVER -->
 
 <div class="game-over" id="gameOver">
+
 <div class="card">
 
 <div class="card-icons">
@@ -617,7 +643,7 @@ BẮT ĐẦU
 <h1>GAME OVER</h1>
 
 <p>
-Mình vô tình đè vào quái vật mất rồi 😭
+Bạn vô tình đụng trúng quái vật rồi 😭
 </p>
 
 <button class="main-btn" onclick="location.reload()">
@@ -625,6 +651,7 @@ Mình vô tình đè vào quái vật mất rồi 😭
 </button>
 
 </div>
+
 </div>
 
 <!-- WIN -->
@@ -643,6 +670,14 @@ Mình vô tình đè vào quái vật mất rồi 😭
 
 <div class="card">
 
+<button class="photobook-btn" id="openPhotobook">
+📸
+</button>
+
+<div class="photo-hint">
+nhấp vào đây để chụp ảnh
+</div>
+
 <div class="card-icons">
 🎂
 </div>
@@ -652,16 +687,9 @@ Chúc Cậu Ba Sinh Nhật Vui Vẻ 🎉
 </h1>
 
 <p>
-Tuổi mới thật nhiều sức khỏe 💖
+Tuổi mới thật nhiều sức khỏe,<br>
+luôn hạnh phúc bên gia đình 💖
 </p>
-
-<button class="photobook-btn" id="openPhotobook">
-📸
-</button>
-
-<div class="photobook-hint">
-nhấp vào đây để chụp ảnh
-</div>
 
 <button class="main-btn"
 onclick="location.reload()">
@@ -682,16 +710,49 @@ onclick="location.reload()">
 
 <div id="countdown"></div>
 
-<div id="photoResult"></div>
+<div id="photobookFrame">
 
-<div class="controls" id="photoControls" style="display:none; position:absolute; bottom:20px; z-index:999999;">
-<button id="downloadBtn">⬇️ Tải</button>
-<button id="closeBtn">❌ Đóng</button>
+<div class="frame-title">
+🎂 PHOTOBOOK 🎀
+</div>
+
+<div class="frame-slot" id="slot1"></div>
+<div class="frame-slot" id="slot2"></div>
+<div class="frame-slot" id="slot3"></div>
+
+<div class="controls">
+
+<button id="downloadBtn">
+⬇️ Tải
+</button>
+
+<button id="closeBtn">
+❌ Đóng
+</button>
+
+</div>
+
 </div>
 
 </div>
 
 <script>
+
+const rotateScreen=document.getElementById('rotateScreen');
+
+function checkRotate(){
+
+if(window.innerHeight > window.innerWidth){
+rotateScreen.style.display='flex';
+}else{
+rotateScreen.style.display='none';
+}
+
+}
+
+checkRotate();
+
+window.addEventListener('resize',checkRotate);
 
 const game=document.getElementById('game');
 const player=document.getElementById('player');
@@ -703,7 +764,6 @@ const startScreen=document.getElementById('startScreen');
 const finalCake=document.getElementById('finalCake');
 const gameOver=document.getElementById('gameOver');
 const winScreen=document.getElementById('winScreen');
-const rotateOverlay=document.getElementById('rotateOverlay');
 
 const letters='HAPPY BIRTHDAY'.split('');
 
@@ -714,7 +774,7 @@ let movingToCake=false;
 let score=0;
 let letterIndex=0;
 
-let groundHeight=88;
+const groundHeight=76;
 
 let playerBottom=groundHeight;
 let velocity=0;
@@ -723,20 +783,7 @@ let holding=false;
 
 let treePos=0;
 
-function checkRotate(){
-
-if(window.innerWidth > window.innerHeight){
-rotateOverlay.style.display='none';
-}else{
-rotateOverlay.style.display='flex';
-}
-
-}
-
-window.addEventListener('resize',checkRotate);
-checkRotate();
-
-/* TREES */
+/* TREE */
 
 for(let i=0;i<28;i++){
 
@@ -755,9 +802,7 @@ treeLayer.appendChild(tree);
 
 /* START */
 
-startBtn.addEventListener('click',startGame);
-
-function startGame(){
+startBtn.onclick=()=>{
 
 if(started)return;
 
@@ -771,21 +816,22 @@ setInterval(createBanana,1700);
 
 setInterval(createEnemy,1900);
 
-}
+};
 
-/* GAME LOOP */
+/* LOOP */
 
 function gameLoop(){
 
 if(started && alive){
 
-treePos-=1.5;
+treePos-=window.innerWidth < 900 ? 1.2 : 2;
 
 if(treePos<=-window.innerWidth){
 treePos=0;
 }
 
-treeLayer.style.transform=`translateX(${treePos}px)`;
+treeLayer.style.transform=
+`translateX(${treePos}px)`;
 
 gravity=holding && velocity>0 ? 0.4 : 0.85;
 
@@ -815,7 +861,7 @@ if(!started || !alive)return;
 holding=true;
 
 if(playerBottom<=groundHeight+1){
-velocity=16;
+velocity=window.innerWidth < 900 ? 15 : 18;
 }
 
 }
@@ -843,7 +889,7 @@ banana.className='banana';
 banana.innerHTML='🍌';
 
 banana.style.bottom=
-(160+Math.random()*150)+'px';
+(150+Math.random()*150)+'px';
 
 game.appendChild(banana);
 
@@ -853,7 +899,7 @@ function move(){
 
 if(!alive)return;
 
-x-=5;
+x-=window.innerWidth < 900 ? 4.5 : 8;
 
 banana.style.left=x+'px';
 
@@ -895,7 +941,6 @@ return;
 }
 
 requestAnimationFrame(move);
-
 }
 
 requestAnimationFrame(move);
@@ -937,12 +982,12 @@ function move(){
 
 if(!alive)return;
 
-x-=6;
+x-=window.innerWidth < 900 ? 5.2 : 8.5;
 
 enemy.style.left=x+'px';
 
 if(Math.random()<0.03 && bottom<=groundHeight+1){
-jumpVelocity=13;
+jumpVelocity=14;
 }
 
 jumpVelocity-=0.7;
@@ -1001,7 +1046,7 @@ let cakeX=window.innerWidth+100;
 
 const moveCake=setInterval(()=>{
 
-cakeX-=5;
+cakeX-=window.innerWidth < 900 ? 4.5 : 8;
 
 finalCake.style.left=cakeX+'px';
 
@@ -1022,7 +1067,7 @@ function autoRunToCake(cakeX){
 const run=setInterval(()=>{
 
 const playerX=
-parseInt(player.style.left||52);
+parseInt(player.style.left||40);
 
 player.style.left=(playerX+4)+'px';
 
@@ -1050,7 +1095,7 @@ launchFireworks();
 
 }
 
-/* FIREWORKS */
+/* FIREWORK */
 
 function launchFireworks(){
 
@@ -1077,21 +1122,21 @@ spark.style.background=
 spark.style.zIndex='999';
 
 spark.style.animation=
-'fireworks 1.2s forwards';
+'fireworks 1.3s forwards';
 
 document.body.appendChild(spark);
 
 setTimeout(()=>{
 spark.remove();
-},1200);
+},1300);
 
 }
 
-},1000);
+},1100);
 
 }
 
-/* PHOTOBOOTH */
+/* PHOTO */
 
 const cameraWrap=document.getElementById('cameraWrap');
 const openPhotobook=document.getElementById('openPhotobook');
@@ -1099,8 +1144,7 @@ const closeBtn=document.getElementById('closeBtn');
 const downloadBtn=document.getElementById('downloadBtn');
 const video=document.getElementById('camera');
 const countdown=document.getElementById('countdown');
-const photoResult=document.getElementById('photoResult');
-const photoControls=document.getElementById('photoControls');
+const photobookFrame=document.getElementById('photobookFrame');
 
 let stream;
 let captured=[];
@@ -1115,10 +1159,6 @@ openPhotobook.onclick=async()=>{
 
 cameraWrap.style.display='flex';
 
-photoResult.style.display='none';
-
-photoControls.style.display='none';
-
 stream=
 await navigator.mediaDevices.getUserMedia({
 video:{facingMode:'user'},
@@ -1127,13 +1167,21 @@ audio:false
 
 video.srcObject=stream;
 
-startPhotoSession();
+captured=[];
+
+await shootPhotos();
+
+photobookFrame.style.display='flex';
 
 };
+
+/* CLOSE */
 
 closeBtn.onclick=()=>{
 
 cameraWrap.style.display='none';
+
+photobookFrame.style.display='none';
 
 if(stream){
 stream.getTracks().forEach(t=>t.stop());
@@ -1141,14 +1189,9 @@ stream.getTracks().forEach(t=>t.stop());
 
 };
 
-async function startPhotoSession(){
+/* SHOOT */
 
-captured=[];
-
-countdown.style.fontSize='40px';
-countdown.innerHTML='📸 Tạo 3 kiểu chụp nè';
-
-await new Promise(r=>setTimeout(r,1600));
+async function shootPhotos(){
 
 for(let i=1;i<=3;i++){
 
@@ -1160,8 +1203,6 @@ await new Promise(r=>setTimeout(r,600));
 
 }
 
-showResult();
-
 }
 
 function countDown(){
@@ -1169,8 +1210,6 @@ function countDown(){
 return new Promise(resolve=>{
 
 let n=3;
-
-countdown.style.fontSize='90px';
 
 countdown.innerHTML=n;
 
@@ -1200,6 +1239,21 @@ resolve();
 
 }
 
+/* FRAME */
+
+function renderFrameDecor(slotEl,slot){
+
+const deco=decorations[slot-1];
+
+slotEl.innerHTML=`
+<div class="sticker s1">${deco[0]}</div>
+<div class="sticker s2">${deco[1]}</div>
+<div class="sticker s3">${deco[2]}</div>
+<div class="sticker s4">${deco[3]}</div>
+`;
+
+}
+
 function capture(slot){
 
 const canvas=document.createElement('canvas');
@@ -1211,42 +1265,35 @@ const ctx=canvas.getContext('2d');
 
 ctx.drawImage(video,0,0,500,750);
 
+ctx.fillStyle='rgba(255,255,255,.08)';
+ctx.fillRect(0,0,500,750);
+
+const deco=decorations[slot-1];
+
+ctx.font='52px Arial';
+
+ctx.fillText(deco[0],24,68);
+ctx.fillText(deco[1],420,68);
+ctx.fillText(deco[2],24,710);
+ctx.fillText(deco[3],420,710);
+
 const img=document.createElement('img');
 
 img.src=canvas.toDataURL('image/png');
 
 captured.push({
 src:img.src,
-deco:decorations[slot-1]
+deco
 });
 
-}
+const slotEl=
+document.getElementById('slot'+slot);
 
-function showResult(){
+slotEl.innerHTML='';
 
-photoResult.innerHTML='';
+renderFrameDecor(slotEl,slot);
 
-captured.forEach((item,index)=>{
-
-const wrap=document.createElement('div');
-
-wrap.className='result-photo';
-
-wrap.innerHTML=`
-<div class="sticker s1">${item.deco[0]}</div>
-<div class="sticker s2">${item.deco[1]}</div>
-<div class="sticker s3">${item.deco[2]}</div>
-<div class="sticker s4">${item.deco[3]}</div>
-<img src="${item.src}">
-`;
-
-photoResult.appendChild(wrap);
-
-});
-
-photoResult.style.display='flex';
-
-photoControls.style.display='flex';
+slotEl.appendChild(img);
 
 }
 
@@ -1270,14 +1317,16 @@ gradient.addColorStop(0,'#ff9bc2');
 gradient.addColorStop(1,'#ff4f94');
 
 ctx.fillStyle=gradient;
+
 ctx.fillRect(0,0,1080,2400);
 
 ctx.fillStyle='white';
+
 ctx.font='bold 70px Arial';
 
 ctx.fillText(
 'HAPPY BIRTHDAY 🎂',
-160,
+150,
 100
 );
 
@@ -1312,13 +1361,14 @@ document.createElement('a');
 link.download=
 'birthday-photobook.png';
 
-link.href=canvas.toDataURL('image/png');
+link.href=
+canvas.toDataURL('image/png');
 
 link.click();
 
 }
 
-}
+};
 
 });
 
