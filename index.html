@@ -1,337 +1,635 @@
-```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Monkey Birthday Runner</title>
+<meta charset="UTF-8"/>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"/>
+
+<title>Monkey Birthday Runner 🎂🐵</title>
 
 <style>
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  font-family:Arial,sans-serif;
+  background:#89e8ff;
+  touch-action:none;
 }
 
 body{
-overflow:hidden;
-font-family:Arial,sans-serif;
-background:#89e8ff;
-touch-action:none;
+  position:fixed;
+  inset:0;
 }
 
 .game{
-position:relative;
-width:100vw;
-height:100vh;
-overflow:hidden;
+  position:relative;
+  width:100vw;
+  height:100vh;
+  overflow:hidden;
 }
+
+/* ================= SKY ================= */
 
 .sky{
-position:absolute;
-inset:0;
-background:linear-gradient(to bottom,#89e8ff,#dff8ff,#fff0c7);
+  position:absolute;
+  inset:0;
+  background:
+  linear-gradient(
+    to bottom,
+    #89e8ff 0%,
+    #c8f7ff 45%,
+    #fff1cf 100%
+  );
 }
 
-.ground{
-position:absolute;
-bottom:0;
-width:100%;
-height:95px;
-background:linear-gradient(to bottom,#63dd64,#25a840);
-border-top:6px solid #1b8c34;
-z-index:5;
+.cloud{
+  position:absolute;
+  width:110px;
+  height:44px;
+  background:white;
+  border-radius:50px;
+  opacity:.9;
 }
+
+.cloud::before,
+.cloud::after{
+  content:'';
+  position:absolute;
+  background:white;
+  border-radius:50%;
+}
+
+.cloud::before{
+  width:48px;
+  height:48px;
+  left:10px;
+  top:-16px;
+}
+
+.cloud::after{
+  width:56px;
+  height:56px;
+  right:8px;
+  top:-22px;
+}
+
+.c1{top:60px;left:8vw;}
+.c2{top:120px;left:60vw;}
+.c3{top:80px;left:36vw;}
+
+/* ================= TREES ================= */
+
+.tree-layer{
+  position:absolute;
+  bottom:92px;
+  width:320%;
+  height:150px;
+  display:flex;
+  align-items:flex-end;
+  gap:60px;
+  padding-left:30px;
+  z-index:3;
+  will-change:transform;
+}
+
+.tree{
+  position:relative;
+  width:72px;
+  height:140px;
+  flex-shrink:0;
+}
+
+.leaf{
+  position:absolute;
+  width:72px;
+  height:72px;
+  background:#46cf67;
+  border-radius:50%;
+  top:0;
+  left:0;
+  box-shadow:
+  -20px 16px 0 #5ae279,
+  20px 16px 0 #36b752;
+}
+
+.trunk{
+  position:absolute;
+  width:16px;
+  height:78px;
+  background:#8b5a2b;
+  left:28px;
+  bottom:0;
+  border-radius:10px;
+}
+
+/* ================= UI ================= */
 
 .message{
-position:absolute;
-top:15px;
-width:100%;
-text-align:center;
-font-size:clamp(24px,5vw,48px);
-font-weight:bold;
-color:#ff4f94;
-z-index:20;
-}
-
-.score{
-position:absolute;
-top:18px;
-left:18px;
-background:white;
-padding:10px 18px;
-border-radius:20px;
-z-index:50;
-font-weight:bold;
+  position:absolute;
+  top:10px;
+  width:100%;
+  text-align:center;
+  font-size:clamp(18px,4vw,40px);
+  font-weight:bold;
+  color:#ff4f94;
+  z-index:40;
+  letter-spacing:2px;
 }
 
 .letter-box{
-position:absolute;
-top:80px;
-left:50%;
-transform:translateX(-50%);
-background:rgba(255,255,255,.95);
-padding:12px 24px;
-border-radius:22px;
-font-size:28px;
-font-weight:bold;
-color:#ff4f94;
-z-index:50;
+  position:absolute;
+  top:50px;
+  left:50%;
+  transform:translateX(-50%);
+  min-width:210px;
+  background:rgba(255,255,255,.95);
+  border-radius:22px;
+  padding:8px 16px;
+  z-index:40;
+  text-align:center;
+  font-size:20px;
+  font-weight:bold;
+  color:#ff4f94;
+  letter-spacing:3px;
+  box-shadow:0 8px 20px rgba(0,0,0,.12);
 }
 
+.score{
+  position:absolute;
+  top:10px;
+  left:12px;
+  background:white;
+  padding:8px 14px;
+  border-radius:18px;
+  font-weight:bold;
+  z-index:50;
+  box-shadow:0 5px 12px rgba(0,0,0,.12);
+}
+
+.tap-guide{
+  position:absolute;
+  bottom:112px;
+  width:100%;
+  text-align:center;
+  color:#ff4f94;
+  font-size:16px;
+  font-weight:bold;
+  z-index:50;
+}
+
+/* ================= GROUND ================= */
+
+.ground{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:86px;
+  background:
+  linear-gradient(
+    to bottom,
+    #66df67,
+    #2db145
+  );
+  border-top:6px solid #1e8e35;
+  z-index:5;
+}
+
+/* ================= PLAYER ================= */
+
 .player{
-position:absolute;
-left:70px;
-bottom:95px;
-width:90px;
-height:90px;
-z-index:20;
+  position:absolute;
+  width:72px;
+  height:72px;
+  left:44px;
+  bottom:86px;
+  z-index:20;
 }
 
 .player img{
-width:100%;
-height:100%;
-object-fit:contain;
+  width:100%;
+  height:100%;
+  object-fit:contain;
 }
 
-.banana,
-.enemy,
-.final-cake{
-position:absolute;
-z-index:20;
-}
+/* ================= BANANA ================= */
 
 .banana{
-font-size:48px;
+  position:absolute;
+  width:52px;
+  height:52px;
+  font-size:42px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:15;
+  animation:bananaFloat 1s infinite ease-in-out;
 }
+
+@keyframes bananaFloat{
+  0%,100%{
+    transform:translateY(0px);
+  }
+  50%{
+    transform:translateY(-5px);
+  }
+}
+
+/* ================= ENEMY ================= */
 
 .enemy{
-width:72px;
-height:72px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:40px;
-border-radius:20px;
+  position:absolute;
+  width:70px;
+  height:70px;
+  border-radius:22px;
+  z-index:14;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-size:40px;
+  border:4px solid rgba(255,255,255,.4);
 }
 
-.enemy1{background:#ff6c6c;}
-.enemy2{background:#7d82ff;}
-.enemy3{background:#ffbf5c;}
+.enemy1{background:#ff7676;}
+.enemy2{background:#7a7dff;}
+.enemy3{background:#ffb74f;}
 
-.final-cake{
-font-size:100px;
-display:none;
-bottom:95px;
-}
+/* ================= OVERLAY ================= */
 
-.screen,
-.rotate-screen,
-.vertical-screen,
+.rotate-overlay,
+.start-screen,
 .game-over,
-.win-screen,
-#cameraWrap{
-position:absolute;
-inset:0;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-z-index:999;
-background:rgba(0,0,0,.45);
-backdrop-filter:blur(8px);
+.win-screen{
+  position:absolute;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:300;
+  background:rgba(255,255,255,.22);
+  backdrop-filter:blur(8px);
 }
 
-.vertical-screen,
 .game-over,
-.win-screen,
-#cameraWrap{
-display:none;
+.win-screen{
+  display:none;
+}
+
+.rotate-overlay{
+  z-index:999999;
 }
 
 .card{
-width:min(92vw,540px);
-background:white;
-padding:35px 28px;
-border-radius:35px;
-text-align:center;
-position:relative;
-z-index:20;
+  position:relative;
+  width:min(70vw,460px);
+  background:white;
+  border-radius:30px;
+  padding:26px 20px;
+  text-align:center;
+  box-shadow:0 18px 40px rgba(0,0,0,.18);
 }
 
 .card h1{
-color:#ff4f94;
-margin-bottom:15px;
-font-size:clamp(34px,6vw,54px);
+  color:#ff4f94;
+  font-size:clamp(24px,5vw,44px);
+  margin-bottom:12px;
 }
 
 .card p{
-font-size:22px;
-line-height:1.5;
-color:#555;
+  font-size:18px;
+  color:#555;
+  line-height:1.5;
+}
+
+.card-icons{
+  font-size:60px;
+  margin-bottom:14px;
 }
 
 .main-btn{
-margin-top:20px;
-border:none;
-background:#ff4f94;
-color:white;
-padding:16px 28px;
-font-size:22px;
-border-radius:22px;
-font-weight:bold;
+  margin-top:18px;
+  border:none;
+  background:#ff4f94;
+  color:white;
+  padding:14px 24px;
+  border-radius:22px;
+  font-size:18px;
+  font-weight:bold;
+  cursor:pointer;
 }
 
+/* ================= MEMORY PHOTOS ================= */
+
 .memory-photo{
-position:absolute;
-overflow:hidden;
-border-radius:28px;
-animation:floatPhoto 18s linear infinite;
-opacity:0;
-z-index:5;
+  position:absolute;
+  overflow:visible;
+  border-radius:20px;
+  animation:memoryFloat 16s linear infinite;
+  opacity:0;
+  z-index:8;
 }
 
 .memory-photo img{
-width:100%;
-height:100%;
-object-fit:contain;
-background:white;
+  width:100%;
+  height:100%;
+  object-fit:contain;
 }
 
-.float1{left:18px;width:270px;height:340px;animation-delay:0s;}
-.float2{left:45px;width:300px;height:230px;animation-delay:5s;}
-.float3{left:10px;width:260px;height:330px;animation-delay:10s;}
-.float4{right:18px;width:270px;height:340px;animation-delay:2s;}
-.float5{right:45px;width:300px;height:230px;animation-delay:7s;}
-.float6{right:10px;width:260px;height:330px;animation-delay:12s;}
-
-@keyframes floatPhoto{
-0%{transform:translateY(120vh);opacity:0;}
-10%{opacity:1;}
-90%{opacity:1;}
-100%{transform:translateY(-140vh);opacity:0;}
+.float1{
+  width:260px;
+  height:190px;
+  left:0;
+  animation-delay:0s;
 }
 
-.firework{
-position:absolute;
-width:12px;
-height:12px;
-border-radius:50%;
-animation:boom 1.2s forwards;
+.float2{
+  width:270px;
+  height:200px;
+  left:40px;
+  animation-delay:3s;
 }
 
-@keyframes boom{
-from{transform:scale(0);opacity:1;}
-to{transform:scale(4);opacity:0;}
+.float3{
+  width:260px;
+  height:190px;
+  right:0;
+  animation-delay:1s;
+}
+
+.float4{
+  width:270px;
+  height:200px;
+  right:40px;
+  animation-delay:5s;
+}
+
+.float5{
+  width:250px;
+  height:180px;
+  left:10px;
+  animation-delay:7s;
+}
+
+.float6{
+  width:250px;
+  height:180px;
+  right:10px;
+  animation-delay:9s;
+}
+
+.float7{
+  width:260px;
+  height:190px;
+  left:30px;
+  animation-delay:11s;
+}
+
+.float8{
+  width:260px;
+  height:190px;
+  right:30px;
+  animation-delay:13s;
+}
+
+.float9{
+  width:250px;
+  height:180px;
+  left:50px;
+  animation-delay:15s;
+}
+
+@keyframes memoryFloat{
+  0%{
+    transform:translateY(120vh);
+    opacity:0;
+  }
+
+  12%{
+    opacity:1;
+  }
+
+  88%{
+    opacity:1;
+  }
+
+  100%{
+    transform:translateY(-140vh);
+    opacity:0;
+  }
+}
+
+/* ================= CAKE ================= */
+
+.final-cake{
+  position:absolute;
+  width:110px;
+  height:110px;
+  right:-240px;
+  bottom:86px;
+  display:none;
+  z-index:30;
+  font-size:95px;
+}
+
+/* ================= PHOTOBOOK ================= */
+
+.photobook-btn{
+  position:absolute;
+  top:14px;
+  right:14px;
+  border:none;
+  width:54px;
+  height:54px;
+  border-radius:50%;
+  background:#ff4f94;
+  color:white;
+  font-size:26px;
+  cursor:pointer;
 }
 
 #cameraWrap{
-background:black;
+  position:fixed;
+  inset:0;
+  background:black;
+  display:none;
+  z-index:999999;
+  justify-content:center;
+  align-items:center;
 }
 
 #camera{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-#cameraMessage,
-#countdown{
-position:absolute;
-color:white;
-font-weight:bold;
-z-index:10;
-text-align:center;
-}
-
-#cameraMessage{
-font-size:40px;
-top:20%;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 
 #countdown{
-font-size:120px;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  color:white;
+  font-size:90px;
+  font-weight:bold;
+  z-index:200;
+  text-shadow:0 0 20px black;
 }
 
-#resultPhotos{
-display:none;
-position:absolute;
-inset:0;
-padding:20px;
-overflow:auto;
-background:rgba(0,0,0,.92);
-z-index:20;
+#photoInstruction{
+  position:absolute;
+  top:60px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(0,0,0,.55);
+  color:white;
+  padding:14px 22px;
+  border-radius:20px;
+  font-size:22px;
+  font-weight:bold;
+  z-index:200;
+}
+
+#photoResults{
+  position:absolute;
+  inset:0;
+  display:none;
+  background:rgba(0,0,0,.92);
+  overflow:auto;
+  padding:30px 20px 120px;
+  z-index:300;
+}
+
+.result-title{
+  text-align:center;
+  color:white;
+  font-size:32px;
+  margin-bottom:24px;
+  font-weight:bold;
 }
 
 .result-grid{
-display:flex;
-flex-direction:column;
-gap:20px;
-max-width:420px;
-margin:auto;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+  align-items:center;
 }
 
 .result-grid img{
-width:100%;
-border-radius:28px;
-object-fit:contain;
-background:white;
+  width:min(340px,90vw);
+  border-radius:28px;
 }
 
-.photo-actions{
-display:flex;
-gap:14px;
-justify-content:center;
-margin-top:20px;
+.result-buttons{
+  margin-top:24px;
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  flex-wrap:wrap;
 }
 
-.photo-actions button{
-border:none;
-padding:14px 20px;
-font-size:18px;
-border-radius:18px;
-font-weight:bold;
+.result-buttons button{
+  border:none;
+  background:#ff4f94;
+  color:white;
+  padding:14px 22px;
+  border-radius:20px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
 }
+
+/* ================= FIREWORK ================= */
+
+@keyframes fireworks{
+  from{
+    transform:scale(0);
+    opacity:1;
+  }
+  to{
+    transform:scale(4);
+    opacity:0;
+  }
+}
+
+/* ================= MOBILE ================= */
 
 @media(max-width:900px){
-.card{
-width:72vw;
-padding:26px 20px;
+
+.message{
+  font-size:18px;
 }
 
-.memory-photo{
-opacity:.9;
+.letter-box{
+  font-size:16px;
+  top:44px;
 }
 
-.float1,.float4{
-width:170px;
-height:230px;
+.score{
+  transform:scale(.92);
+  transform-origin:left top;
 }
 
-.float2,.float5{
-width:180px;
-height:160px;
+.tap-guide{
+  bottom:104px;
+  font-size:13px;
 }
 
-.float3,.float6{
-width:170px;
-height:220px;
+.ground{
+  height:78px;
 }
 
 .player{
-width:75px;
-height:75px;
+  width:64px;
+  height:64px;
+  bottom:78px;
 }
 
-.enemy{
-width:64px;
-height:64px;
-font-size:34px;
+.tree-layer{
+  bottom:78px;
+  transform:scale(.92);
+  transform-origin:bottom left;
 }
+
+.final-cake{
+  bottom:78px;
+  font-size:86px;
 }
+
+.card{
+  width:78vw;
+  padding:20px 16px;
+}
+
+.card h1{
+  font-size:24px;
+}
+
+.card p{
+  font-size:15px;
+}
+
+.memory-photo{
+  width:180px !important;
+  height:130px !important;
+}
+
+.result-grid img{
+  width:88vw;
+}
+
+}
+
 </style>
 </head>
 
@@ -339,49 +637,112 @@ font-size:34px;
 
 <div class="game" id="game">
 
-<div class="sky"></div>
-<div class="ground"></div>
+<!-- ROTATE -->
 
-<div class="message">MONKEY BIRTHDAY RUNNER 🐵</div>
-<div class="score">🍌 <span id="score">0</span></div>
+<div class="rotate-overlay" id="rotateOverlay">
+  <div class="card">
+    <div class="card-icons">📱 ↔️</div>
+    <h1>Xoay ngang điện thoại</h1>
+    <p>
+      Xoay ngang để chơi game dễ hơn nha 🎮
+    </p>
+  </div>
+</div>
+
+<!-- SKY -->
+
+<div class="sky"></div>
+
+<div class="cloud c1"></div>
+<div class="cloud c2"></div>
+<div class="cloud c3"></div>
+
+<!-- TREES -->
+
+<div class="tree-layer" id="treeLayer"></div>
+
+<!-- UI -->
+
+<div class="message">
+MONKEY BIRTHDAY RUNNER 🐵
+</div>
+
 <div class="letter-box" id="letterBox"></div>
 
+<div class="score">
+🍌 <span id="score">0</span>
+</div>
+
+<div class="tap-guide">
+👆 Giữ để bay cao hơn
+</div>
+
+<!-- PLAYER -->
+
 <div class="player" id="player">
-<img src="photos/monkey.png">
+  <img src="photos/monkey.png">
 </div>
 
-<div class="final-cake" id="finalCake">🎂</div>
+<!-- CAKE -->
 
-<div class="rotate-screen screen" id="rotateScreen">
-<div class="card">
-<h1>📱 Xoay ngang điện thoại</h1>
-<p>Hãy xoay ngang màn hình để chơi dễ hơn nha ✨</p>
-<button class="main-btn" id="continueBtn">Tiếp tục</button>
-</div>
+<div class="final-cake" id="finalCake">
+🎂
 </div>
 
-<div class="screen" id="startScreen" style="display:none;">
-<div class="card">
-<h1>Happy Run 🎂</h1>
-<p>Thu thập chuối để ghép HAPPY BIRTHDAY</p>
-<button class="main-btn" id="startBtn">BẮT ĐẦU</button>
+<!-- GROUND -->
+
+<div class="ground"></div>
+
+<!-- START -->
+
+<div class="start-screen" id="startScreen">
+
+  <div class="card">
+
+    <div class="card-icons">
+      🐵 🎂
+    </div>
+
+    <h1>Happy Run</h1>
+
+    <p>
+      Thu thập chuối để ghép HAPPY BIRTHDAY
+    </p>
+
+    <button class="main-btn" id="startBtn">
+      BẮT ĐẦU
+    </button>
+
+  </div>
+
 </div>
-</div>
+
+<!-- GAME OVER -->
 
 <div class="game-over" id="gameOver">
-<div class="card">
-<h1>GAME OVER 😭</h1>
-<button class="main-btn" onclick="location.reload()">🔄 Chơi lại</button>
-</div>
+
+  <div class="card">
+
+    <div class="card-icons">
+      💀 👾
+    </div>
+
+    <h1>GAME OVER</h1>
+
+    <p>
+      Quái vật bắt được bạn rồi 😭
+    </p>
+
+    <button class="main-btn"
+    onclick="location.reload()">
+      🔄 Chơi lại
+    </button>
+
+  </div>
+
 </div>
 
-<div class="vertical-screen" id="verticalScreen">
-<div class="card">
-<h1>📱 Xoay dọc nha</h1>
-<p>Xoay dọc điện thoại để nhận lời chúc và chụp photobooth 💖</p>
-<button class="main-btn" id="showWinBtn">Tiếp tục</button>
-</div>
-</div>
+<!-- WIN -->
 
 <div class="win-screen" id="winScreen">
 
@@ -391,44 +752,94 @@ font-size:34px;
 <div class="memory-photo float4"><img src="photos/pic4.jpg"></div>
 <div class="memory-photo float5"><img src="photos/pic5.jpg"></div>
 <div class="memory-photo float6"><img src="photos/pic6.jpg"></div>
+<div class="memory-photo float7"><img src="photos/pic7.jpg"></div>
+<div class="memory-photo float8"><img src="photos/pic8.jpg"></div>
+<div class="memory-photo float9"><img src="photos/pic9.jpg"></div>
 
 <div class="card">
-<h1>Chúc Mừng Sinh Nhật 🎉</h1>
-<p>Tuổi mới thật nhiều sức khỏe và luôn hạnh phúc bên gia đình 💖</p>
-<button class="main-btn" id="openPhotobook">📸 Chụp photobooth</button>
-<button class="main-btn" onclick="location.reload()">🔄 Chơi lại</button>
+
+<button class="photobook-btn"
+id="openPhotobook">
+📸
+</button>
+
+<div class="card-icons">
+🎂
 </div>
+
+<h1>
+Chúc Cậu Ba Sinh Nhật Vui Vẻ 🎉
+</h1>
+
+<p>
+Tuổi mới thật nhiều sức khỏe,<br>
+luôn hạnh phúc bên gia đình 💖
+</p>
+
+<button class="main-btn"
+onclick="location.reload()">
+🔄 Chơi lại
+</button>
+
 </div>
+
+</div>
+
+</div>
+
+<!-- CAMERA -->
 
 <div id="cameraWrap">
-<video id="camera" autoplay playsinline></video>
-<div id="cameraMessage"></div>
+
+<video id="camera"
+autoplay
+playsinline></video>
+
+<div id="photoInstruction">
+  Tạo 3 kiểu chụp nè 📸
+</div>
+
 <div id="countdown"></div>
 
-<div id="resultPhotos">
-<div class="result-grid" id="resultGrid"></div>
-<div class="photo-actions">
-<button id="downloadBtn">⬇️ Download</button>
-<button id="closeBtn">❌ Đóng</button>
-</div>
-</div>
+<!-- RESULT -->
+
+<div id="photoResults">
+
+  <div class="result-title">
+    🎂 PHOTOBOOK 🎂
+  </div>
+
+  <div class="result-grid" id="resultGrid"></div>
+
+  <div class="result-buttons">
+
+    <button id="downloadBtn">
+      ⬇️ Tải ảnh
+    </button>
+
+    <button id="closeBtn">
+      ❌ Đóng
+    </button>
+
+  </div>
+
 </div>
 
 </div>
 
 <script>
+
+const game=document.getElementById('game');
 const player=document.getElementById('player');
 const scoreEl=document.getElementById('score');
 const letterBox=document.getElementById('letterBox');
+const treeLayer=document.getElementById('treeLayer');
 const startBtn=document.getElementById('startBtn');
 const startScreen=document.getElementById('startScreen');
-const rotateScreen=document.getElementById('rotateScreen');
-const continueBtn=document.getElementById('continueBtn');
 const finalCake=document.getElementById('finalCake');
 const gameOver=document.getElementById('gameOver');
-const verticalScreen=document.getElementById('verticalScreen');
-const showWinBtn=document.getElementById('showWinBtn');
 const winScreen=document.getElementById('winScreen');
+const rotateOverlay=document.getElementById('rotateOverlay');
 
 const letters='HAPPY BIRTHDAY'.split('');
 
@@ -439,86 +850,221 @@ let movingToCake=false;
 let score=0;
 let letterIndex=0;
 
-let playerBottom=95;
+const groundHeight=
+window.innerWidth < 900 ? 78 : 86;
+
+let playerBottom=groundHeight;
+
 let velocity=0;
-let gravity=0.9;
+let gravity=0.82;
 let holding=false;
 
-continueBtn.onclick=()=>{
-rotateScreen.style.display='none';
-startScreen.style.display='flex';
+let treePos=0;
+
+/* ================= ROTATE CHECK ================= */
+
+function checkOrientation(){
+
+const mobile=
+window.innerWidth < 900;
+
+if(!mobile){
+
+rotateOverlay.style.display='none';
+return;
 }
 
-startBtn.onclick=()=>{
-started=true;
-startScreen.style.display='none';
-requestAnimationFrame(gameLoop);
-setInterval(createBanana,1900);
-setInterval(createEnemy,2300);
+if(window.innerWidth > window.innerHeight){
+
+rotateOverlay.style.display='none';
+
+}else{
+
+rotateOverlay.style.display='flex';
 }
+}
+
+checkOrientation();
+
+window.addEventListener(
+'resize',
+checkOrientation
+);
+
+/* ================= TREES ================= */
+
+for(let i=0;i<28;i++){
+
+const tree=document.createElement('div');
+
+tree.className='tree';
+
+tree.innerHTML=`
+<div class="leaf"></div>
+<div class="trunk"></div>
+`;
+
+treeLayer.appendChild(tree);
+}
+
+/* ================= START ================= */
+
+startBtn.addEventListener(
+'click',
+startGame
+);
+
+startBtn.addEventListener(
+'touchstart',
+(e)=>{
+e.preventDefault();
+startGame();
+},
+{passive:false}
+);
+
+function startGame(){
+
+if(started)return;
+
+started=true;
+
+startScreen.style.display='none';
+
+requestAnimationFrame(gameLoop);
+
+setInterval(createBanana,1600);
+
+setInterval(createEnemy,1850);
+}
+
+/* ================= GAME LOOP ================= */
 
 function gameLoop(){
+
 if(started && alive){
-gravity=holding && velocity>0 ? 0.45 : 0.9;
+
+treePos-=window.innerWidth < 900 ? 1.2 : 1.8;
+
+if(treePos<=-window.innerWidth){
+treePos=0;
+}
+
+treeLayer.style.transform=
+`translateX(${treePos}px)`;
+
+gravity=
+holding && velocity>0 ? 0.38 : 0.82;
+
 velocity-=gravity;
+
 playerBottom+=velocity;
 
-if(playerBottom<95){
-playerBottom=95;
+if(playerBottom<groundHeight){
+
+playerBottom=groundHeight;
 velocity=0;
 }
 
-player.style.bottom=playerBottom+'px';
+player.style.bottom=
+playerBottom+'px';
 }
 
 requestAnimationFrame(gameLoop);
 }
 
+/* ================= CONTROL ================= */
+
 function holdStart(){
-if(!alive || !started)return;
+
+if(!started || !alive)return;
+
 holding=true;
-if(playerBottom<=96){
-velocity=18;
+
+if(playerBottom<=groundHeight+1){
+
+velocity=
+window.innerWidth < 900 ? 15 : 18;
 }
 }
 
 function holdEnd(){
+
 holding=false;
 }
 
-window.addEventListener('touchstart',holdStart);
-window.addEventListener('touchend',holdEnd);
-window.addEventListener('mousedown',holdStart);
-window.addEventListener('mouseup',holdEnd);
+window.addEventListener(
+'touchstart',
+holdStart,
+{passive:true}
+);
+
+window.addEventListener(
+'touchend',
+holdEnd,
+{passive:true}
+);
+
+window.addEventListener(
+'mousedown',
+holdStart
+);
+
+window.addEventListener(
+'mouseup',
+holdEnd
+);
+
+/* ================= BANANA ================= */
 
 function createBanana(){
+
 if(!alive || movingToCake)return;
 
-const banana=document.createElement('div');
+const banana=
+document.createElement('div');
+
 banana.className='banana';
+
 banana.innerHTML='🍌';
-banana.style.left=window.innerWidth+'px';
-banana.style.bottom=(190+Math.random()*180)+'px';
 
-document.querySelector('.game').appendChild(banana);
+banana.style.bottom=
+(150+Math.random()*150)+'px';
 
-let x=window.innerWidth;
+game.appendChild(banana);
+
+let x=window.innerWidth+80;
 
 function move(){
+
 if(!alive)return;
 
-x-=window.innerWidth<900 ? 5 : 8;
+x-=window.innerWidth < 900 ? 4.5 : 7;
+
 banana.style.left=x+'px';
 
-const p=player.getBoundingClientRect();
-const b=banana.getBoundingClientRect();
+const p=
+player.getBoundingClientRect();
 
-if(p.left<b.right && p.right>b.left && p.top<b.bottom && p.bottom>b.top){
+const b=
+banana.getBoundingClientRect();
+
+const hit=
+p.left<b.right &&
+p.right>b.left &&
+p.top<b.bottom &&
+p.bottom>b.top;
+
+if(hit){
+
 score+=10;
+
 scoreEl.innerHTML=score;
 
 if(letterIndex<letters.length){
+
 letterBox.innerHTML+=letters[letterIndex];
+
 letterIndex++;
 }
 
@@ -527,11 +1073,14 @@ banana.remove();
 if(letterIndex>=letters.length){
 finishRun();
 }
+
 return;
 }
 
 if(x<-100){
+
 banana.remove();
+
 return;
 }
 
@@ -540,6 +1089,8 @@ requestAnimationFrame(move);
 
 requestAnimationFrame(move);
 }
+
+/* ================= ENEMY ================= */
 
 const enemyTypes=[
 {emoji:'👾',class:'enemy1'},
@@ -548,51 +1099,83 @@ const enemyTypes=[
 ];
 
 function createEnemy(){
+
 if(!alive || movingToCake)return;
 
-const type=enemyTypes[Math.floor(Math.random()*enemyTypes.length)];
+const type=
+enemyTypes[
+Math.floor(Math.random()*enemyTypes.length)
+];
 
-const enemy=document.createElement('div');
-enemy.className='enemy '+type.class;
-enemy.innerHTML=type.emoji;
-enemy.style.bottom='95px';
-document.querySelector('.game').appendChild(enemy);
+const enemy=
+document.createElement('div');
+
+enemy.className=
+`enemy ${type.class}`;
+
+enemy.innerHTML=
+type.emoji;
+
+game.appendChild(enemy);
 
 let x=window.innerWidth+100;
-let bottom=95;
+
+let bottom=groundHeight;
+
 let jumpVelocity=0;
 
 function move(){
+
 if(!alive)return;
 
-x-=window.innerWidth<900 ? 6.5 : 9;
+x-=window.innerWidth < 900 ? 5.2 : 8;
+
 enemy.style.left=x+'px';
 
-if(Math.random()<0.03 && bottom<=96){
-jumpVelocity=16;
+if(Math.random()<0.03 &&
+bottom<=groundHeight+1){
+
+jumpVelocity=14;
 }
 
-jumpVelocity-=0.8;
+jumpVelocity-=0.7;
+
 bottom+=jumpVelocity;
 
-if(bottom<95){
-bottom=95;
+if(bottom<groundHeight){
+
+bottom=groundHeight;
+
 jumpVelocity=0;
 }
 
 enemy.style.bottom=bottom+'px';
 
-const p=player.getBoundingClientRect();
-const e=enemy.getBoundingClientRect();
+const p=
+player.getBoundingClientRect();
 
-if(p.left<e.right && p.right>e.left && p.top<e.bottom && p.bottom>e.top){
+const e=
+enemy.getBoundingClientRect();
+
+const hit=
+p.left<e.right &&
+p.right>e.left &&
+p.top<e.bottom &&
+p.bottom>e.top;
+
+if(hit){
+
 alive=false;
+
 gameOver.style.display='flex';
+
 return;
 }
 
 if(x<-120){
+
 enemy.remove();
+
 return;
 }
 
@@ -602,187 +1185,413 @@ requestAnimationFrame(move);
 requestAnimationFrame(move);
 }
 
+/* ================= FINISH ================= */
+
 function finishRun(){
+
 movingToCake=true;
+
 finalCake.style.display='block';
 
-let cakeX=window.innerWidth+100;
+let cakeX=
+window.innerWidth+100;
 
-const move=setInterval(()=>{
-cakeX-=6;
-finalCake.style.left=cakeX+'px';
+const moveCake=
+setInterval(()=>{
 
-if(cakeX<window.innerWidth-300){
-clearInterval(move);
+cakeX-=window.innerWidth < 900 ? 4 : 7;
+
+finalCake.style.left=
+cakeX+'px';
+
+if(cakeX<window.innerWidth-260){
+
+clearInterval(moveCake);
+
 autoRunToCake(cakeX);
 }
+
 },16);
 }
 
 function autoRunToCake(cakeX){
-const run=setInterval(()=>{
-const playerX=parseInt(player.style.left||70);
-player.style.left=(playerX+5)+'px';
 
-if(playerX>=cakeX-110){
+const run=
+setInterval(()=>{
+
+const playerX=
+parseInt(player.style.left||44);
+
+player.style.left=
+(playerX+4)+'px';
+
+if(playerX>=cakeX-100){
+
 clearInterval(run);
+
 alive=false;
-verticalScreen.style.display='flex';
+
+showWin();
 }
+
 },16);
 }
 
-showWinBtn.onclick=()=>{
-verticalScreen.style.display='none';
+/* ================= WIN ================= */
+
+function showWin(){
+
 winScreen.style.display='flex';
+
 launchFireworks();
 }
 
+/* ================= FIREWORK ================= */
+
 function launchFireworks(){
+
 setInterval(()=>{
-for(let i=0;i<10;i++){
-const fire=document.createElement('div');
-fire.className='firework';
-fire.style.left=Math.random()*window.innerWidth+'px';
-fire.style.top=Math.random()*window.innerHeight*.5+'px';
-fire.style.background=`hsl(${Math.random()*360},100%,60%)`;
-document.body.appendChild(fire);
-setTimeout(()=>fire.remove(),1200);
-}
+
+for(let i=0;i<8;i++){
+
+const spark=
+document.createElement('div');
+
+spark.style.position='absolute';
+
+spark.style.width='10px';
+
+spark.style.height='10px';
+
+spark.style.borderRadius='50%';
+
+spark.style.left=
+Math.random()*window.innerWidth+'px';
+
+spark.style.top=
+Math.random()*window.innerHeight*.5+'px';
+
+spark.style.background=
+`hsl(${Math.random()*360},100%,60%)`;
+
+spark.style.zIndex='999';
+
+spark.style.animation=
+'fireworks 1.2s forwards';
+
+document.body.appendChild(spark);
+
+setTimeout(()=>{
+spark.remove();
 },1200);
+
 }
 
-const openPhotobook=document.getElementById('openPhotobook');
-const cameraWrap=document.getElementById('cameraWrap');
-const video=document.getElementById('camera');
-const countdown=document.getElementById('countdown');
-const cameraMessage=document.getElementById('cameraMessage');
-const resultPhotos=document.getElementById('resultPhotos');
-const resultGrid=document.getElementById('resultGrid');
-const downloadBtn=document.getElementById('downloadBtn');
-const closeBtn=document.getElementById('closeBtn');
+},900);
+}
 
-let captured=[];
+/* ================= PHOTOBOOTH ================= */
+
+const cameraWrap=
+document.getElementById('cameraWrap');
+
+const openPhotobook=
+document.getElementById('openPhotobook');
+
+const closeBtn=
+document.getElementById('closeBtn');
+
+const downloadBtn=
+document.getElementById('downloadBtn');
+
+const video=
+document.getElementById('camera');
+
+const countdown=
+document.getElementById('countdown');
+
+const resultGrid=
+document.getElementById('resultGrid');
+
+const photoResults=
+document.getElementById('photoResults');
+
 let stream;
 
-openPhotobook.onclick=async()=>{
-resultGrid.innerHTML='';
-resultPhotos.style.display='none';
-captured=[];
+let captured=[];
+
+openPhotobook.addEventListener(
+'click',
+openBook
+);
+
+openPhotobook.addEventListener(
+'touchstart',
+(e)=>{
+e.preventDefault();
+openBook();
+},
+{passive:false}
+);
+
+async function openBook(){
 
 cameraWrap.style.display='flex';
 
-stream=await navigator.mediaDevices.getUserMedia({
-video:{facingMode:'user'},
+photoResults.style.display='none';
+
+captured=[];
+
+resultGrid.innerHTML='';
+
+stream=
+await navigator.mediaDevices.getUserMedia({
+video:{
+facingMode:'user'
+},
 audio:false
 });
 
 video.srcObject=stream;
 
-cameraMessage.innerHTML='Tạo 3 kiểu chụp nè ✨';
+startShoot();
+}
 
-setTimeout(async()=>{
-cameraMessage.innerHTML='';
+/* ================= SHOOT ================= */
 
-for(let i=0;i<3;i++){
-await startCountdown();
-capturePhoto();
-await new Promise(r=>setTimeout(r,500));
+async function startShoot(){
+
+for(let i=1;i<=3;i++){
+
+await countDown();
+
+capture();
 }
 
 showResults();
-
-},2000);
 }
 
-function startCountdown(){
+function countDown(){
+
 return new Promise(resolve=>{
+
 let n=3;
+
 countdown.innerHTML=n;
 
-const timer=setInterval(()=>{
+const timer=
+setInterval(()=>{
+
 n--;
 
 if(n>0){
+
 countdown.innerHTML=n;
-}else if(n===0){
-countdown.innerHTML='📸';
+
 }else{
+
+countdown.innerHTML='📸';
+}
+
+if(n<0){
+
 clearInterval(timer);
+
 countdown.innerHTML='';
+
 resolve();
 }
-},700);
+
+},750);
+
 });
 }
 
-function capturePhoto(){
-const canvas=document.createElement('canvas');
-canvas.width=700;
-canvas.height=1000;
+/* ================= CAPTURE ================= */
 
-const ctx=canvas.getContext('2d');
-ctx.drawImage(video,0,0,700,1000);
+function capture(){
 
-const src=canvas.toDataURL('image/png');
-captured.push(src);
+const canvas=
+document.createElement('canvas');
+
+canvas.width=600;
+
+canvas.height=900;
+
+const ctx=
+canvas.getContext('2d');
+
+ctx.drawImage(
+video,
+0,
+0,
+600,
+900
+);
+
+ctx.fillStyle=
+'rgba(255,255,255,.06)';
+
+ctx.fillRect(
+0,
+0,
+600,
+900
+);
+
+ctx.fillStyle='#ff4f94';
+
+ctx.fillRect(
+100,
+26,
+400,
+58
+);
+
+ctx.fillStyle='white';
+
+ctx.font='bold 34px Arial';
+
+ctx.fillText(
+'HAPPY BIRTHDAY',
+118,
+64
+);
+
+const img=
+canvas.toDataURL('image/png');
+
+captured.push(img);
 }
 
+/* ================= SHOW RESULT ================= */
+
 function showResults(){
-resultPhotos.style.display='block';
+
+photoResults.style.display='block';
 
 captured.forEach(src=>{
-const img=document.createElement('img');
+
+const img=
+document.createElement('img');
+
 img.src=src;
+
 resultGrid.appendChild(img);
 });
 }
 
-closeBtn.onclick=()=>{
-cameraWrap.style.display='none';
-if(stream){
-stream.getTracks().forEach(t=>t.stop());
-}
-}
+/* ================= DOWNLOAD ================= */
 
-downloadBtn.onclick=()=>{
-const canvas=document.createElement('canvas');
+downloadBtn.addEventListener(
+'click',
+downloadPhotos
+);
+
+function downloadPhotos(){
+
+if(captured.length===0)return;
+
+const canvas=
+document.createElement('canvas');
+
 canvas.width=1080;
-canvas.height=3400;
 
-const ctx=canvas.getContext('2d');
+canvas.height=captured.length*720+200;
 
-const gradient=ctx.createLinearGradient(0,0,0,3400);
+const ctx=
+canvas.getContext('2d');
+
+const gradient=
+ctx.createLinearGradient(
+0,
+0,
+0,
+canvas.height
+);
+
 gradient.addColorStop(0,'#ff9bc2');
+
 gradient.addColorStop(1,'#ff4f94');
+
 ctx.fillStyle=gradient;
-ctx.fillRect(0,0,1080,3400);
+
+ctx.fillRect(
+0,
+0,
+canvas.width,
+canvas.height
+);
 
 ctx.fillStyle='white';
+
 ctx.font='bold 70px Arial';
-ctx.fillText('HAPPY BIRTHDAY 🎂',180,100);
+
+ctx.fillText(
+'HAPPY BIRTHDAY 🎂',
+130,
+90
+);
 
 let loaded=0;
 
 captured.forEach((src,index)=>{
+
 const img=new Image();
+
 img.src=src;
 
 img.onload=()=>{
-ctx.drawImage(img,90,180+(index*1000),900,820);
+
+const y=140+(index*700);
+
+ctx.drawImage(
+img,
+110,
+y,
+860,
+580
+);
+
 loaded++;
 
 if(loaded===captured.length){
-const link=document.createElement('a');
-link.download='photobooth.png';
-link.href=canvas.toDataURL('image/png');
+
+const link=
+document.createElement('a');
+
+link.download=
+'birthday-photobook.png';
+
+link.href=
+canvas.toDataURL('image/png');
+
 link.click();
 }
 }
 });
 }
+
+/* ================= CLOSE ================= */
+
+closeBtn.addEventListener(
+'click',
+closeBook
+);
+
+function closeBook(){
+
+cameraWrap.style.display='none';
+
+if(stream){
+
+stream.getTracks().forEach(
+t=>t.stop()
+);
+}
+}
+
 </script>
 
 </body>
 </html>
-```
