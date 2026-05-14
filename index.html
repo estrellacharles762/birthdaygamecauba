@@ -1,18 +1,12 @@
+# Monkey Birthday Runner – Bản Hoàn Chỉnh Mobile Fix
+
+```html
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8" />
-
-<meta
-name="viewport"
-content="
-width=device-width,
-initial-scale=1.0,
-viewport-fit=cover,
-maximum-scale=1.0,
-user-scalable=no
-"
-/>
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no"/>
 
 <title>Monkey Birthday Runner 🎂🐵</title>
 
@@ -42,55 +36,20 @@ body{
 .game{
   position:relative;
   width:100vw;
-  height:100dvh;
+  height:100vh;
   overflow:hidden;
 }
-
-/* =========================
-ROTATE MOBILE
-========================= */
-
-.rotate-warning{
-  position:fixed;
-  inset:0;
-  background:#ff4f94;
-  color:white;
-  z-index:999999;
-  display:none;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  padding:30px;
-  font-size:28px;
-  font-weight:bold;
-  line-height:1.6;
-}
-
-@media (orientation:portrait) and (max-width:900px){
-  .rotate-warning{
-    display:flex;
-  }
-}
-
-/* =========================
-SKY
-========================= */
 
 .sky{
   position:absolute;
   inset:0;
-  background:
-  linear-gradient(
+  background:linear-gradient(
     to bottom,
     #89e8ff 0%,
     #c8f7ff 45%,
     #fff1cf 100%
   );
 }
-
-/* =========================
-CLOUD
-========================= */
 
 .cloud{
   position:absolute;
@@ -127,15 +86,11 @@ CLOUD
 .c2{top:130px;left:60vw;}
 .c3{top:90px;left:35vw;}
 
-/* =========================
-TREES
-========================= */
-
 .tree-layer{
   position:absolute;
-  bottom:120px;
+  bottom:80px;
   width:320%;
-  height:220px;
+  height:180px;
   display:flex;
   gap:70px;
   align-items:flex-end;
@@ -147,7 +102,7 @@ TREES
 .tree{
   position:relative;
   width:90px;
-  height:180px;
+  height:160px;
   flex-shrink:0;
 }
 
@@ -167,47 +122,40 @@ TREES
 .trunk{
   position:absolute;
   width:18px;
-  height:95px;
+  height:90px;
   background:#8b5a2b;
   left:36px;
   bottom:0;
   border-radius:10px;
 }
 
-/* =========================
-UI
-========================= */
-
 .message{
   position:absolute;
-  top:12px;
+  top:14px;
   width:100%;
   text-align:center;
-  font-size:clamp(20px,4vw,50px);
+  font-size:clamp(20px,5vw,44px);
   font-weight:bold;
   color:#ff4f94;
   z-index:40;
   letter-spacing:2px;
-  text-shadow:0 5px 12px rgba(0,0,0,.12);
-  padding:0 10px;
 }
 
 .letter-box{
   position:absolute;
-  top:64px;
+  top:62px;
   left:50%;
   transform:translateX(-50%);
   min-width:220px;
-  max-width:90vw;
   background:rgba(255,255,255,.92);
-  border-radius:20px;
-  padding:10px 20px;
+  border-radius:24px;
+  padding:10px 18px;
   z-index:40;
   text-align:center;
-  font-size:clamp(16px,3vw,28px);
+  font-size:22px;
   font-weight:bold;
   color:#ff4f94;
-  letter-spacing:2px;
+  letter-spacing:3px;
   box-shadow:0 10px 28px rgba(0,0,0,.12);
 }
 
@@ -220,52 +168,35 @@ UI
   border-radius:18px;
   font-weight:bold;
   z-index:50;
-  box-shadow:0 10px 24px rgba(0,0,0,.12);
-  font-size:16px;
 }
 
 .tap-guide{
   position:absolute;
-  bottom:145px;
+  bottom:110px;
   width:100%;
   text-align:center;
   color:#ff4f94;
-  font-size:clamp(14px,2.5vw,24px);
+  font-size:18px;
   font-weight:bold;
   z-index:50;
-  animation:pulse 1.2s infinite;
 }
-
-@keyframes pulse{
-  0%,100%{transform:scale(1)}
-  50%{transform:scale(1.08)}
-}
-
-/* =========================
-GROUND
-========================= */
 
 .ground{
   position:absolute;
   bottom:0;
   width:100%;
-  height:120px;
-  background:
-  linear-gradient(to bottom,#66df67,#2db145);
-  border-top:8px solid #1e8e35;
+  height:80px;
+  background:linear-gradient(to bottom,#66df67,#2db145);
+  border-top:6px solid #1e8e35;
   z-index:5;
 }
 
-/* =========================
-PLAYER
-========================= */
-
 .player{
   position:absolute;
-  width:clamp(72px,10vw,92px);
-  height:clamp(72px,10vw,92px);
-  left:70px;
-  bottom:120px;
+  width:82px;
+  height:82px;
+  left:60px;
+  bottom:80px;
   z-index:20;
 }
 
@@ -274,10 +205,6 @@ PLAYER
   height:100%;
   object-fit:contain;
 }
-
-/* =========================
-BANANA
-========================= */
 
 .banana{
   position:absolute;
@@ -288,39 +215,24 @@ BANANA
   justify-content:center;
   align-items:center;
   z-index:15;
-  animation:bananaSpin 1s infinite;
 }
-
-@keyframes bananaSpin{
-  0%{transform:rotate(0deg)}
-  50%{transform:rotate(10deg)}
-  100%{transform:rotate(0deg)}
-}
-
-/* =========================
-ENEMY
-========================= */
 
 .enemy{
   position:absolute;
-  width:76px;
-  height:76px;
+  width:78px;
+  height:78px;
   border-radius:24px;
   z-index:14;
   display:flex;
   justify-content:center;
   align-items:center;
   font-size:44px;
-  border:5px solid rgba(255,255,255,.5);
+  border:4px solid rgba(255,255,255,.45);
 }
 
 .enemy1{background:#ff7676;}
 .enemy2{background:#7a7dff;}
 .enemy3{background:#ffb74f;}
-
-/* =========================
-SCREENS
-========================= */
 
 .start-screen,
 .game-over,
@@ -332,8 +244,8 @@ SCREENS
   align-items:center;
   flex-direction:column;
   z-index:300;
-  background:rgba(255,255,255,.25);
-  backdrop-filter:blur(10px);
+  background:rgba(255,255,255,.22);
+  backdrop-filter:blur(8px);
 }
 
 .game-over,
@@ -343,203 +255,118 @@ SCREENS
 
 .card{
   position:relative;
-  width:min(92vw,560px);
+  width:min(78vw,500px);
   background:white;
-  border-radius:40px;
-  padding:36px 24px;
+  border-radius:34px;
+  padding:30px 22px;
   text-align:center;
-  box-shadow:0 25px 60px rgba(0,0,0,.18);
-  z-index:30;
+  box-shadow:0 20px 50px rgba(0,0,0,.18);
+  z-index:20;
 }
 
 .card h1{
   color:#ff4f94;
-  font-size:clamp(28px,5vw,62px);
-  margin-bottom:18px;
+  font-size:clamp(26px,5vw,50px);
+  margin-bottom:16px;
 }
 
 .card p{
-  font-size:clamp(16px,2.5vw,24px);
+  font-size:20px;
   color:#555;
   line-height:1.5;
 }
 
 .card-icons{
-  font-size:clamp(50px,8vw,78px);
-  margin-bottom:20px;
+  font-size:70px;
+  margin-bottom:16px;
 }
 
 .main-btn{
-  margin-top:20px;
+  margin-top:18px;
   border:none;
   background:#ff4f94;
   color:white;
-  padding:16px 30px;
-  border-radius:26px;
+  padding:15px 26px;
+  border-radius:22px;
   font-size:20px;
   font-weight:bold;
-  box-shadow:0 12px 28px rgba(255,79,148,.3);
   cursor:pointer;
   position:relative;
   z-index:9999;
 }
 
-/* =========================
-MEMORY PHOTOS
-========================= */
-
 .memory-photo{
   position:absolute;
   overflow:hidden;
   border-radius:28px;
+  box-shadow:0 10px 24px rgba(0,0,0,.18);
   animation:memoryFloat 18s linear infinite;
   opacity:0;
   z-index:10;
-  background:black;
+  background:transparent;
 }
 
 .memory-photo img{
   width:100%;
   height:100%;
   object-fit:contain;
-  background:black;
+  background:transparent;
 }
 
-/* LEFT */
-
-.float1{
-  width:290px;
-  height:390px;
-  left:18px;
-  animation-delay:0s;
-}
-
-.float2{
-  width:340px;
-  height:250px;
-  left:45px;
-  animation-delay:4s;
-}
-
-.float3{
-  width:300px;
-  height:400px;
-  left:10px;
-  animation-delay:8s;
-}
-
-.float4{
-  width:350px;
-  height:240px;
-  left:40px;
-  animation-delay:12s;
-}
-
-/* RIGHT */
-
-.float5{
-  width:290px;
-  height:390px;
-  right:18px;
-  animation-delay:2s;
-}
-
-.float6{
-  width:340px;
-  height:250px;
-  right:45px;
-  animation-delay:6s;
-}
-
-.float7{
-  width:300px;
-  height:400px;
-  right:10px;
-  animation-delay:10s;
-}
-
-.float8{
-  width:350px;
-  height:240px;
-  right:40px;
-  animation-delay:14s;
-}
-
-.float9{
-  width:320px;
-  height:420px;
-  right:20px;
-  animation-delay:18s;
-}
+.float1{width:290px;height:230px;left:20px;animation-delay:0s;}
+.float2{width:300px;height:240px;left:40px;animation-delay:4s;}
+.float3{width:290px;height:230px;right:20px;animation-delay:2s;}
+.float4{width:300px;height:240px;right:40px;animation-delay:6s;}
+.float5{width:280px;height:220px;left:10px;animation-delay:8s;}
+.float6{width:280px;height:220px;right:10px;animation-delay:10s;}
+.float7{width:300px;height:240px;left:30px;animation-delay:12s;}
+.float8{width:300px;height:240px;right:30px;animation-delay:14s;}
+.float9{width:290px;height:230px;left:45px;animation-delay:16s;}
 
 @keyframes memoryFloat{
-
   0%{
-    transform:
-    translateY(120vh)
-    rotate(-4deg);
-
+    transform:translateY(120vh);
     opacity:0;
   }
 
-  10%{
+  15%{
     opacity:1;
   }
 
-  90%{
+  85%{
     opacity:1;
   }
 
   100%{
-    transform:
-    translateY(-140vh)
-    rotate(4deg);
-
+    transform:translateY(-140vh);
     opacity:0;
   }
 }
 
-/* =========================
-CAKE
-========================= */
-
 .final-cake{
   position:absolute;
-  width:130px;
-  height:130px;
+  width:120px;
+  height:120px;
   right:-240px;
-  bottom:120px;
+  bottom:80px;
   display:none;
   z-index:30;
-  font-size:110px;
-  animation:bounceCake 1s infinite;
+  font-size:100px;
 }
-
-@keyframes bounceCake{
-  0%,100%{
-    transform:translateY(0)
-  }
-  50%{
-    transform:translateY(-8px)
-  }
-}
-
-/* =========================
-PHOTOBOOK
-========================= */
 
 .photobook-btn{
   position:absolute;
-  top:20px;
-  right:20px;
+  top:16px;
+  right:16px;
   border:none;
-  width:60px;
-  height:60px;
+  width:54px;
+  height:54px;
   border-radius:50%;
   background:#ff4f94;
   color:white;
-  font-size:28px;
+  font-size:26px;
   cursor:pointer;
+  z-index:99999;
 }
 
 #cameraWrap{
@@ -547,7 +374,7 @@ PHOTOBOOK
   inset:0;
   background:rgba(0,0,0,.94);
   display:none;
-  z-index:99999;
+  z-index:999999;
   justify-content:center;
   align-items:center;
 }
@@ -566,34 +393,31 @@ PHOTOBOOK
   left:50%;
   transform:translate(-50%,-50%);
   color:white;
-  font-size:120px;
+  font-size:100px;
   font-weight:bold;
   z-index:100;
-  text-shadow:0 0 20px black;
 }
 
 #photobookFrame{
   position:absolute;
-  left:20px;
+  left:14px;
   top:50%;
   transform:translateY(-50%);
-  width:min(320px,88vw);
-  height:92vh;
-  background:
-  linear-gradient(to bottom,#ff9bc2,#ff4f94);
-
-  border-radius:34px;
-  padding:20px;
+  width:min(310px,88vw);
+  height:88vh;
+  background:linear-gradient(to bottom,#ff9bc2,#ff4f94);
+  border-radius:30px;
+  padding:16px;
   display:flex;
   flex-direction:column;
-  gap:16px;
-  box-shadow:0 0 50px rgba(0,0,0,.4);
+  gap:14px;
+  z-index:999999;
 }
 
 .frame-title{
   text-align:center;
   color:white;
-  font-size:26px;
+  font-size:24px;
   font-weight:bold;
 }
 
@@ -601,28 +425,27 @@ PHOTOBOOK
   position:relative;
   width:100%;
   flex:1;
-  border-radius:28px;
+  border-radius:26px;
   overflow:hidden;
-  background:black;
+  background:white;
 }
 
 .frame-slot img{
   width:100%;
   height:100%;
-  object-fit:contain;
-  background:black;
+  object-fit:cover;
 }
 
 .sticker{
   position:absolute;
   z-index:5;
-  font-size:44px;
+  font-size:50px;
 }
 
-.s1{top:10px;left:10px;}
-.s2{top:10px;right:10px;}
-.s3{bottom:10px;left:10px;}
-.s4{bottom:10px;right:10px;}
+.s1{top:8px;left:8px;}
+.s2{top:8px;right:8px;}
+.s3{bottom:8px;left:8px;}
+.s4{bottom:8px;right:8px;}
 
 .controls{
   display:flex;
@@ -638,79 +461,88 @@ PHOTOBOOK
   font-weight:bold;
   padding:12px 16px;
   border-radius:18px;
-  font-size:18px;
+  font-size:16px;
   cursor:pointer;
 }
 
-/* =========================
-FIREWORKS
-========================= */
-
 @keyframes fireworks{
-
   from{
     transform:scale(0);
     opacity:1;
   }
-
   to{
-    transform:scale(3);
+    transform:scale(4);
     opacity:0;
   }
 }
 
-/* =========================
-MOBILE
-========================= */
-
 @media(max-width:900px){
 
-  .tree-layer{
-    bottom:100px;
-  }
+.message{
+  font-size:22px;
+}
 
-  .ground{
-    height:100px;
-  }
+.letter-box{
+  top:58px;
+  font-size:18px;
+  padding:8px 14px;
+}
 
-  .player{
-    left:40px;
-  }
+.tap-guide{
+  bottom:96px;
+  font-size:15px;
+}
 
-  .tap-guide{
-    bottom:120px;
-  }
+.ground{
+  height:70px;
+}
 
-  .memory-photo{
-    border-radius:20px;
-  }
+.player{
+  width:70px;
+  height:70px;
+  bottom:70px;
+  left:38px;
+}
 
-  .float1,.float3,.float5,.float7,.float9{
-    width:180px !important;
-    height:240px !important;
-  }
+.tree-layer{
+  bottom:70px;
+}
 
-  .float2,.float4,.float6,.float8{
-    width:220px !important;
-    height:160px !important;
-  }
+.final-cake{
+  bottom:70px;
+}
 
-  #photobookFrame{
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:90vw;
-    height:90vh;
-  }
+.card{
+  width:72vw;
+  padding:24px 16px;
+}
 
-  .enemy{
-    width:62px;
-    height:62px;
-    font-size:34px;
-  }
+.card h1{
+  font-size:28px;
+}
 
-  .banana{
-    font-size:40px;
-  }
+.card p{
+  font-size:16px;
+}
+
+.memory-photo{
+  width:180px !important;
+  height:150px !important;
+}
+
+.float1,.float2,.float5,.float7,.float9{
+  left:0px;
+}
+
+.float3,.float4,.float6,.float8{
+  right:0px;
+}
+
+#photobookFrame{
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:92vw;
+}
 
 }
 
@@ -718,14 +550,6 @@ MOBILE
 </head>
 
 <body>
-
-<!-- ROTATE -->
-
-<div class="rotate-warning">
-📱 Hãy xoay ngang điện thoại để chơi game
-</div>
-
-<!-- GAME -->
 
 <div class="game" id="game">
 
@@ -748,7 +572,7 @@ MONKEY BIRTHDAY RUNNER 🐵
 </div>
 
 <div class="tap-guide">
-👆 Chạm giữ để nhảy cao hơn
+👆 Giữ lâu để bay cao hơn
 </div>
 
 <div class="player" id="player">
@@ -761,144 +585,63 @@ MONKEY BIRTHDAY RUNNER 🐵
 
 <div class="ground"></div>
 
-<!-- START -->
-
 <div class="start-screen" id="startScreen">
-
 <div class="card">
-
-<div class="card-icons">
-🐵 🎂
-</div>
-
+<div class="card-icons">🐵 🎂</div>
 <h1>Happy Run</h1>
-
-<p>
-Thu thập chuối để ghép HAPPY BIRTHDAY
-</p>
-
-<button class="main-btn" id="startBtn">
-BẮT ĐẦU
-</button>
-
+<p>Thu thập chuối để ghép HAPPY BIRTHDAY</p>
+<button class="main-btn" id="startBtn">BẮT ĐẦU</button>
 </div>
-
 </div>
-
-<!-- GAME OVER -->
 
 <div class="game-over" id="gameOver">
-
 <div class="card">
-
-<div class="card-icons">
-💀 👾
-</div>
-
+<div class="card-icons">💀 👾</div>
 <h1>GAME OVER</h1>
-
-<p>
-Bị quái vật bắt mất rồi 😭
-</p>
-
-<button
-class="main-btn"
-onclick="location.reload()">
-
-🔄 Chơi lại
-
-</button>
-
+<p>Quái vật bắt được bạn rồi 😭</p>
+<button class="main-btn" onclick="location.reload()">🔄 Chơi lại</button>
 </div>
-
 </div>
-
-<!-- WIN -->
 
 <div class="win-screen" id="winScreen">
 
-<div class="memory-photo float1">
-<img src="photos/pic1.jpg">
-</div>
-
-<div class="memory-photo float2">
-<img src="photos/pic2.jpg">
-</div>
-
-<div class="memory-photo float3">
-<img src="photos/pic3.jpg">
-</div>
-
-<div class="memory-photo float4">
-<img src="photos/pic4.jpg">
-</div>
-
-<div class="memory-photo float5">
-<img src="photos/pic5.jpg">
-</div>
-
-<div class="memory-photo float6">
-<img src="photos/pic6.jpg">
-</div>
-
-<div class="memory-photo float7">
-<img src="photos/pic7.jpg">
-</div>
-
-<div class="memory-photo float8">
-<img src="photos/pic8.jpg">
-</div>
-
-<div class="memory-photo float9">
-<img src="photos/pic9.jpg">
-</div>
+<div class="memory-photo float1"><img src="photos/pic1.jpg"></div>
+<div class="memory-photo float2"><img src="photos/pic2.jpg"></div>
+<div class="memory-photo float3"><img src="photos/pic3.jpg"></div>
+<div class="memory-photo float4"><img src="photos/pic4.jpg"></div>
+<div class="memory-photo float5"><img src="photos/pic5.jpg"></div>
+<div class="memory-photo float6"><img src="photos/pic6.jpg"></div>
+<div class="memory-photo float7"><img src="photos/pic7.jpg"></div>
+<div class="memory-photo float8"><img src="photos/pic8.jpg"></div>
+<div class="memory-photo float9"><img src="photos/pic9.jpg"></div>
 
 <div class="card">
 
-<button
-class="photobook-btn"
-id="openPhotobook">
+<button class="photobook-btn" id="openPhotobook">📸</button>
 
-📸
-
-</button>
-
-<div class="card-icons">
-🎂
-</div>
+<div class="card-icons">🎂</div>
 
 <h1>
 Chúc Cậu Ba Sinh Nhật Vui Vẻ 🎉
 </h1>
 
 <p>
-Tuổi mới thật nhiều sức khỏe,
+Tuổi mới thật nhiều sức khỏe,<br>
 luôn hạnh phúc bên gia đình 💖
 </p>
 
-<button
-class="main-btn"
-onclick="location.reload()">
-
+<button class="main-btn" onclick="location.reload()">
 🔄 Chơi lại
-
 </button>
 
 </div>
-
 </div>
 
 </div>
-
-<!-- PHOTOBOOK -->
 
 <div id="cameraWrap">
 
-<video
-id="camera"
-autoplay
-playsinline
-muted></video>
+<video id="camera" autoplay playsinline></video>
 
 <div id="countdown"></div>
 
@@ -913,19 +656,9 @@ muted></video>
 <div class="frame-slot" id="slot3"></div>
 
 <div class="controls">
-
-<button id="shootBtn">
-📸 Chụp
-</button>
-
-<button id="downloadBtn">
-⬇️ Tải
-</button>
-
-<button id="closeBtn">
-❌ Đóng
-</button>
-
+<button id="shootBtn">📸 Chụp</button>
+<button id="downloadBtn">⬇️ Tải</button>
+<button id="closeBtn">❌ Đóng</button>
 </div>
 
 </div>
@@ -934,59 +667,18 @@ muted></video>
 
 <script>
 
-/* =========================
-DEVICE
-========================= */
+const game=document.getElementById('game');
+const player=document.getElementById('player');
+const scoreEl=document.getElementById('score');
+const letterBox=document.getElementById('letterBox');
+const treeLayer=document.getElementById('treeLayer');
+const startBtn=document.getElementById('startBtn');
+const startScreen=document.getElementById('startScreen');
+const finalCake=document.getElementById('finalCake');
+const gameOver=document.getElementById('gameOver');
+const winScreen=document.getElementById('winScreen');
 
-const isMobile =
-/Android|iPhone|iPad|iPod/i
-.test(navigator.userAgent);
-
-const enemySpeed =
-isMobile ? 5.5 : 8;
-
-const bananaSpeed =
-isMobile ? 5 : 8;
-
-const treeSpeed =
-isMobile ? 1.2 : 2;
-
-/* =========================
-ELEMENT
-========================= */
-
-const game =
-document.getElementById('game');
-
-const player =
-document.getElementById('player');
-
-const scoreEl =
-document.getElementById('score');
-
-const letterBox =
-document.getElementById('letterBox');
-
-const treeLayer =
-document.getElementById('treeLayer');
-
-const startBtn =
-document.getElementById('startBtn');
-
-const startScreen =
-document.getElementById('startScreen');
-
-const finalCake =
-document.getElementById('finalCake');
-
-const gameOver =
-document.getElementById('gameOver');
-
-const winScreen =
-document.getElementById('winScreen');
-
-const letters =
-'HAPPY BIRTHDAY'.split('');
+const letters='HAPPY BIRTHDAY'.split('');
 
 let started=false;
 let alive=true;
@@ -995,443 +687,442 @@ let movingToCake=false;
 let score=0;
 let letterIndex=0;
 
-let playerBottom=120;
+let groundHeight=window.innerWidth < 900 ? 70 : 80;
+
+let playerBottom=groundHeight;
 let velocity=0;
-let gravity=0.9;
+let gravity=0.85;
 let holding=false;
 
 let treePos=0;
 
-/* =========================
-TREES
-========================= */
-
 for(let i=0;i<28;i++){
-
-  const tree=
-  document.createElement('div');
-
-  tree.className='tree';
-
-  tree.innerHTML=`
-  <div class="leaf"></div>
-  <div class="trunk"></div>
-  `;
-
-  treeLayer.appendChild(tree);
+const tree=document.createElement('div');
+tree.className='tree';
+tree.innerHTML=`
+<div class="leaf"></div>
+<div class="trunk"></div>
+`;
+treeLayer.appendChild(tree);
 }
 
-/* =========================
-START
-========================= */
+startBtn.addEventListener('click',startGame);
+touchFix(startBtn,startGame);
 
-startBtn.addEventListener(
-'click',
-startGame
-);
-
-startBtn.addEventListener(
-'touchstart',
-startGame
-);
-
-function startGame(e){
-
-  if(e)e.preventDefault();
-
-  if(started)return;
-
-  started=true;
-
-  startScreen.style.display='none';
-
-  requestAnimationFrame(gameLoop);
-
-  setInterval(
-  createBanana,
-  isMobile ? 2100 : 1800
-  );
-
-  setInterval(
-  createEnemy,
-  isMobile ? 2800 : 2300
-  );
+function startGame(){
+if(started)return;
+started=true;
+startScreen.style.display='none';
+requestAnimationFrame(gameLoop);
+setInterval(createBanana,1700);
+setInterval(createEnemy,1800);
 }
-
-/* =========================
-GAME LOOP
-========================= */
 
 function gameLoop(){
 
-  if(started && alive){
+if(started && alive){
 
-    treePos-=treeSpeed;
+treePos-=window.innerWidth < 900 ? 1.3 : 2;
 
-    if(treePos<=-window.innerWidth){
-      treePos=0;
-    }
-
-    treeLayer.style.transform=
-    `translateX(${treePos}px)`;
-
-    gravity=
-    holding && velocity>0
-    ? 0.45
-    : 0.9;
-
-    velocity-=gravity;
-
-    playerBottom+=velocity;
-
-    if(playerBottom<120){
-      playerBottom=120;
-      velocity=0;
-    }
-
-    player.style.bottom=
-    playerBottom+'px';
-  }
-
-  requestAnimationFrame(gameLoop);
+if(treePos<=-window.innerWidth){
+treePos=0;
 }
 
-/* =========================
-JUMP
-========================= */
+treeLayer.style.transform=`translateX(${treePos}px)`;
 
-function holdStart(e){
+gravity=holding && velocity>0 ? 0.4 : 0.85;
 
-  e.preventDefault();
+velocity-=gravity;
+playerBottom+=velocity;
 
-  if(!started || !alive)return;
+if(playerBottom<groundHeight){
+playerBottom=groundHeight;
+velocity=0;
+}
 
-  holding=true;
+player.style.bottom=playerBottom+'px';
+}
 
-  if(playerBottom<=121){
-    velocity=isMobile ? 18 : 20;
-  }
+requestAnimationFrame(gameLoop);
+}
+
+function holdStart(){
+if(!started || !alive)return;
+holding=true;
+if(playerBottom<=groundHeight+1){
+velocity=window.innerWidth < 900 ? 16 : 20;
+}
 }
 
 function holdEnd(){
-  holding=false;
+holding=false;
 }
 
-window.addEventListener(
-'touchstart',
-holdStart,
-{passive:false}
-);
-
-window.addEventListener(
-'touchend',
-holdEnd
-);
-
-window.addEventListener(
-'mousedown',
-holdStart
-);
-
-window.addEventListener(
-'mouseup',
-holdEnd
-);
-
-/* =========================
-BANANA
-========================= */
+window.addEventListener('touchstart',holdStart,{passive:true});
+window.addEventListener('touchend',holdEnd,{passive:true});
+window.addEventListener('mousedown',holdStart);
+window.addEventListener('mouseup',holdEnd);
 
 function createBanana(){
 
-  if(!alive || movingToCake)return;
+if(!alive || movingToCake)return;
 
-  const banana=
-  document.createElement('div');
+const banana=document.createElement('div');
+banana.className='banana';
+banana.innerHTML='🍌';
+banana.style.bottom=(170+Math.random()*160)+'px';
+game.appendChild(banana);
 
-  banana.className='banana';
+let x=window.innerWidth+80;
 
-  banana.innerHTML='🍌';
+function move(){
 
-  banana.style.bottom=
-  (220+Math.random()*150)+'px';
+if(!alive)return;
 
-  game.appendChild(banana);
+x-=window.innerWidth < 900 ? 4.5 : 8;
+banana.style.left=x+'px';
 
-  let x=window.innerWidth+80;
+const p=player.getBoundingClientRect();
+const b=banana.getBoundingClientRect();
 
-  function move(){
+const hit=
+p.left<b.right &&
+p.right>b.left &&
+p.top<b.bottom &&
+p.bottom>b.top;
 
-    if(!alive)return;
+if(hit){
+score+=10;
+scoreEl.innerHTML=score;
 
-    x-=bananaSpeed;
-
-    banana.style.left=x+'px';
-
-    const p=
-    player.getBoundingClientRect();
-
-    const b=
-    banana.getBoundingClientRect();
-
-    const hit=
-    p.left<b.right &&
-    p.right>b.left &&
-    p.top<b.bottom &&
-    p.bottom>b.top;
-
-    if(hit){
-
-      score+=10;
-
-      scoreEl.innerHTML=score;
-
-      if(letterIndex<letters.length){
-
-        letterBox.innerHTML+=
-        letters[letterIndex];
-
-        letterIndex++;
-      }
-
-      banana.remove();
-
-      if(letterIndex>=letters.length){
-        finishRun();
-      }
-
-      return;
-    }
-
-    if(x<-100){
-
-      banana.remove();
-
-      return;
-    }
-
-    requestAnimationFrame(move);
-  }
-
-  requestAnimationFrame(move);
+if(letterIndex<letters.length){
+letterBox.innerHTML+=letters[letterIndex];
+letterIndex++;
 }
 
-/* =========================
-ENEMY
-========================= */
+banana.remove();
+
+if(letterIndex>=letters.length){
+finishRun();
+}
+return;
+}
+
+if(x<-100){
+banana.remove();
+return;
+}
+
+requestAnimationFrame(move);
+}
+
+requestAnimationFrame(move);
+}
 
 const enemyTypes=[
-
 {emoji:'👾',class:'enemy1'},
 {emoji:'👹',class:'enemy2'},
 {emoji:'💀',class:'enemy3'}
-
 ];
 
 function createEnemy(){
 
-  if(!alive || movingToCake)return;
+if(!alive || movingToCake)return;
 
-  const type=
-  enemyTypes[
-  Math.floor(
-  Math.random()*
-  enemyTypes.length
-  )];
+const type=enemyTypes[Math.floor(Math.random()*enemyTypes.length)];
 
-  const enemy=
-  document.createElement('div');
+const enemy=document.createElement('div');
+enemy.className=`enemy ${type.class}`;
+enemy.innerHTML=type.emoji;
+game.appendChild(enemy);
 
-  enemy.className=
-  `enemy ${type.class}`;
+let x=window.innerWidth+100;
+let bottom=groundHeight;
+let jumpVelocity=0;
 
-  enemy.innerHTML=type.emoji;
+function move(){
 
-  game.appendChild(enemy);
+if(!alive)return;
 
-  let x=window.innerWidth+100;
+x-=window.innerWidth < 900 ? 5.5 : 9;
+enemy.style.left=x+'px';
 
-  let bottom=120;
-  let jumpVelocity=0;
-
-  function move(){
-
-    if(!alive)return;
-
-    x-=enemySpeed;
-
-    enemy.style.left=x+'px';
-
-    if(
-      Math.random()<0.03 &&
-      bottom<=121
-    ){
-      jumpVelocity=
-      isMobile ? 14 : 16;
-    }
-
-    jumpVelocity-=0.8;
-
-    bottom+=jumpVelocity;
-
-    if(bottom<120){
-
-      bottom=120;
-
-      jumpVelocity=0;
-    }
-
-    enemy.style.bottom=
-    bottom+'px';
-
-    const p=
-    player.getBoundingClientRect();
-
-    const e=
-    enemy.getBoundingClientRect();
-
-    const hit=
-
-    p.left<e.right &&
-    p.right>e.left &&
-    p.top<e.bottom &&
-    p.bottom>e.top;
-
-    if(hit){
-
-      alive=false;
-
-      gameOver.style.display='flex';
-
-      return;
-    }
-
-    if(x<-120){
-
-      enemy.remove();
-
-      return;
-    }
-
-    requestAnimationFrame(move);
-  }
-
-  requestAnimationFrame(move);
+if(Math.random()<0.03 && bottom<=groundHeight+1){
+jumpVelocity=14;
 }
 
-/* =========================
-FINISH
-========================= */
+jumpVelocity-=0.7;
+bottom+=jumpVelocity;
+
+if(bottom<groundHeight){
+bottom=groundHeight;
+jumpVelocity=0;
+}
+
+enemy.style.bottom=bottom+'px';
+
+const p=player.getBoundingClientRect();
+const e=enemy.getBoundingClientRect();
+
+const hit=
+p.left<e.right &&
+p.right>e.left &&
+p.top<e.bottom &&
+p.bottom>e.top;
+
+if(hit){
+alive=false;
+gameOver.style.display='flex';
+return;
+}
+
+if(x<-120){
+enemy.remove();
+return;
+}
+
+requestAnimationFrame(move);
+}
+
+requestAnimationFrame(move);
+}
 
 function finishRun(){
 
-  movingToCake=true;
+movingToCake=true;
+finalCake.style.display='block';
 
-  finalCake.style.display='block';
+let cakeX=window.innerWidth+100;
 
-  let cakeX=
-  window.innerWidth+100;
+const moveCake=setInterval(()=>{
 
-  const moveCake=
-  setInterval(()=>{
+cakeX-=window.innerWidth < 900 ? 4.5 : 8;
 
-    cakeX-=isMobile ? 5 : 8;
+finalCake.style.left=cakeX+'px';
 
-    finalCake.style.left=
-    cakeX+'px';
+if(cakeX<window.innerWidth-280){
+clearInterval(moveCake);
+autoRunToCake(cakeX);
+}
 
-    if(cakeX<window.innerWidth-320){
-
-      clearInterval(moveCake);
-
-      autoRunToCake(cakeX);
-    }
-
-  },16);
+},16);
 }
 
 function autoRunToCake(cakeX){
 
-  const run=setInterval(()=>{
+const run=setInterval(()=>{
 
-    const playerX=
-    parseInt(
-    player.style.left||70
-    );
+const playerX=parseInt(player.style.left||60);
+player.style.left=(playerX+4)+'px';
 
-    player.style.left=
-    (playerX+4)+'px';
-
-    if(playerX>=cakeX-120){
-
-      clearInterval(run);
-
-      alive=false;
-
-      showWin();
-    }
-
-  },16);
+if(playerX>=cakeX-110){
+clearInterval(run);
+alive=false;
+showWin();
 }
 
-/* =========================
-WIN
-========================= */
+},16);
+}
 
 function showWin(){
-
-  winScreen.style.display='flex';
-
-  launchFireworks();
+winScreen.style.display='flex';
+launchFireworks();
 }
 
-/* =========================
-FIREWORKS
-========================= */
-
 function launchFireworks(){
+setInterval(()=>{
+for(let i=0;i<8;i++){
+const spark=document.createElement('div');
+spark.style.position='absolute';
+spark.style.width='10px';
+spark.style.height='10px';
+spark.style.borderRadius='50%';
+spark.style.left=Math.random()*window.innerWidth+'px';
+spark.style.top=Math.random()*window.innerHeight*.5+'px';
+spark.style.background=`hsl(${Math.random()*360},100%,60%)`;
+spark.style.zIndex='999';
+spark.style.animation='fireworks 1.2s forwards';
+document.body.appendChild(spark);
+setTimeout(()=>spark.remove(),1200);
+}
+},1000);
+}
 
-  setInterval(()=>{
+const cameraWrap=document.getElementById('cameraWrap');
+const openPhotobook=document.getElementById('openPhotobook');
+const closeBtn=document.getElementById('closeBtn');
+const shootBtn=document.getElementById('shootBtn');
+const downloadBtn=document.getElementById('downloadBtn');
+const video=document.getElementById('camera');
+const countdown=document.getElementById('countdown');
 
-    for(let i=0;i<8;i++){
+let stream;
+let captured=[];
 
-      const spark=
-      document.createElement('div');
+const decorations=[
+['🌸','🎀','💖','⭐'],
+['🍓','🎂','✨','🎈'],
+['🎉','🌟','🎊','🐵']
+];
 
-      spark.style.position='absolute';
+touchFix(openPhotobook,openBook);
+touchFix(closeBtn,closeBook);
+touchFix(shootBtn,shootPhotos);
+touchFix(downloadBtn,downloadPhotos);
 
-      spark.style.width='10px';
-      spark.style.height='10px';
+async function openBook(){
+cameraWrap.style.display='flex';
 
-      spark.style.borderRadius='50%';
+stream=await navigator.mediaDevices.getUserMedia({
+video:{facingMode:'user'},
+audio:false
+});
 
-      spark.style.left=
-      Math.random()*
-      window.innerWidth+'px';
+video.srcObject=stream;
+}
 
-      spark.style.top=
-      Math.random()*
-      window.innerHeight*.5+'px';
+function closeBook(){
+cameraWrap.style.display='none';
+if(stream){
+stream.getTracks().forEach(t=>t.stop());
+}
+}
 
-      spark.style.background=
-      `hsl(${Math.random()*360},100%,60%)`;
+async function shootPhotos(){
 
-      spark.style.zIndex='999';
+captured=[];
 
-      spark.style.animation=
-      'fireworks 1.3s forwards';
+for(let i=1;i<=3;i++){
+await countDown();
+capture(i);
+await new Promise(r=>setTimeout(r,600));
+}
+}
 
-      document.body.appendChild(spark);
+function countDown(){
+return new Promise(resolve=>{
+let n=3;
+countdown.innerHTML=n;
+const timer=setInterval(()=>{
+n--;
+if(n>0){
+countdown.innerHTML=n;
+}else{
+countdown.innerHTML='📸';
+}
 
-      setTimeout(()=>{
-        spark.remove();
-      },1300);
-    }
+if(n<0){
+clearInterval(timer);
+countdown.innerHTML='';
+resolve();
+}
+},700);
+});
+}
 
-  },1000);
+function renderFrameDecor(slotEl,slot){
+const deco=decorations[slot-1];
+slotEl.innerHTML=`
+<div class="sticker s1">${deco[0]}</div>
+<div class="sticker s2">${deco[1]}</div>
+<div class="sticker s3">${deco[2]}</div>
+<div class="sticker s4">${deco[3]}</div>
+`;
+}
+
+function capture(slot){
+
+const canvas=document.createElement('canvas');
+canvas.width=500;
+canvas.height=750;
+
+const ctx=canvas.getContext('2d');
+ctx.drawImage(video,0,0,500,750);
+
+ctx.fillStyle='rgba(255,255,255,.08)';
+ctx.fillRect(0,0,500,750);
+
+ctx.fillStyle='#ff4f94';
+ctx.fillRect(70,24,360,52);
+
+ctx.fillStyle='white';
+ctx.font='bold 30px Arial';
+ctx.fillText('HAPPY BIRTHDAY',95,58);
+
+const deco=decorations[slot-1];
+ctx.font='52px Arial';
+ctx.fillText(deco[0],24,68);
+ctx.fillText(deco[1],420,68);
+ctx.fillText(deco[2],24,710);
+ctx.fillText(deco[3],420,710);
+
+const img=document.createElement('img');
+img.src=canvas.toDataURL('image/png');
+
+captured.push({src:img.src,deco});
+
+const slotEl=document.getElementById('slot'+slot);
+slotEl.innerHTML='';
+renderFrameDecor(slotEl,slot);
+slotEl.appendChild(img);
+}
+
+function downloadPhotos(){
+
+if(captured.length===0)return;
+
+const canvas=document.createElement('canvas');
+canvas.width=1080;
+canvas.height=2400;
+
+const ctx=canvas.getContext('2d');
+
+const gradient=ctx.createLinearGradient(0,0,0,2400);
+gradient.addColorStop(0,'#ff9bc2');
+gradient.addColorStop(1,'#ff4f94');
+ctx.fillStyle=gradient;
+ctx.fillRect(0,0,1080,2400);
+
+ctx.fillStyle='white';
+ctx.font='bold 70px Arial';
+ctx.fillText('HAPPY BIRTHDAY 🎂',160,100);
+
+let loaded=0;
+
+captured.forEach((item,index)=>{
+const img=new Image();
+img.src=item.src;
+
+img.onload=()=>{
+const y=180+(index*700);
+ctx.drawImage(img,110,y,860,580);
+ctx.font='60px Arial';
+ctx.fillText(item.deco[0],100,y+70);
+ctx.fillText(item.deco[1],900,y+70);
+ctx.fillText(item.deco[2],100,y+540);
+ctx.fillText(item.deco[3],900,y+540);
+loaded++;
+
+if(loaded===captured.length){
+const link=document.createElement('a');
+link.download='birthday-photobook.png';
+link.href=canvas.toDataURL('image/png');
+link.click();
+}
+}
+});
+}
+
+function touchFix(el,fn){
+el.addEventListener('click',fn);
+el.addEventListener('touchstart',(e)=>{
+e.preventDefault();
+fn();
+},{passive:false});
 }
 
 </script>
 
 </body>
 </html>
+```
